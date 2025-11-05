@@ -1,0 +1,39 @@
+.header {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 1rem 0;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  padding-left: 0;
+}
+
+.nav-list li a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.nav-list li a:hover {
+  color: var(--secondary-color);
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem 0;
+  background: white;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 3rem;
+}
