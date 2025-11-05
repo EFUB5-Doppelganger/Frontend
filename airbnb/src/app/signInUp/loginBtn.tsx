@@ -1,22 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Inter } from 'next/font/google';
 
 type Props = {
   loginMethod: string,
 }
 
+const inter = Inter({ subsets: ['latin'], weight: '300' })
+
 export default function loginBtn (props: Props) {
-  const loginMethod = { props }
+  const { loginMethod } = props;
 
   return (
     <Wrapper>
-      <LoginText>
+      <LoginText className={inter.className}>
         {loginMethod === "계속" ?
           "계속":
           `${loginMethod}로 로그인하기`}
       </LoginText>
     </Wrapper>
-  )
+  );
 }
 
 const Wrapper = styled.div`
