@@ -1,3 +1,14 @@
+/* 호출 방식
+  <Review
+    profileImage={
+      <img src="/profile/profile1.svg" width={40} height={40} />
+    }
+    userName="지민"
+    writeDate="2025년 8월"
+    review="광안대교가 한눈에 보이는 뷰가 정말 압도적이에요. 특히 야경이 멋져서 숙소에 머무는 것만으로도 여행 온 기분이 제대로 납니다."
+  />
+*/
+
 import React from 'react';
 import styled from 'styled-components';
 import { Poppins } from 'next/font/google';
@@ -31,7 +42,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
-  gap: 2rem;
+  gap: 1.25rem;
 `;
 
 const ProfileContainer = styled.div`
@@ -73,4 +84,6 @@ const ReviewContent = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  padding: 0;
+  margin: 0;
 `;
