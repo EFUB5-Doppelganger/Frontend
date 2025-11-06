@@ -1,38 +1,34 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import styles from "./Header.module.css";
-import { FaSearch, FaUserCircle } from "react-icons/fa";
+import Image from 'next/image';
+import { FaSearch, FaUserCircle } from 'react-icons/fa';
+import * as S from './Header.styles';
 
 export default function Header() {
   return (
-    <header className={styles.header}>
+    <S.Header>
       {/* 로고 */}
-      <div className={styles.logoWrapper}>
+      <S.LogoWrapper>
         <Image
           src="/logo.svg"
           alt="DoppelGanger Logo"
           width={120}
           height={40}
         />
-      </div>
+      </S.LogoWrapper>
 
       {/* 검색창 */}
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          placeholder="후쿠오카"
-          className={styles.searchInput}
-        />
-        <button className={styles.searchButton}>
+      <S.SearchContainer>
+        <S.SearchInput type="text" placeholder="후쿠오카" />
+        <S.SearchButton>
           <FaSearch size={12} color="#FFFFFF" />
-        </button>
-      </div>
+        </S.SearchButton>
+      </S.SearchContainer>
 
       {/* 유저 아이콘 */}
-      <div className={styles.userIconContainer}>
+      <S.UserIconContainer>
         <FaUserCircle size={20} color="#707070" />
-      </div>
-    </header>
+      </S.UserIconContainer>
+    </S.Header>
   );
 }

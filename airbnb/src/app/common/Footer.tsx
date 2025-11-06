@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
-import styles from "./Footer.module.css";
+import * as S from './Footer.styles';
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.leftSection}>
-        <span>© 2025 DoppelGanger, Inc.</span>
-        <span>Terms</span>
-        <span>Sitemap</span>
-        <span>Privacy</span>
-        <span>Your Privacy Choices</span>
-        <span>Destinations</span>
-      </div>
+    <S.Footer>
+      <S.Section>
+        <S.Item>© 2025 DoppelGanger, Inc.</S.Item>
+        <S.Item>Terms</S.Item>
+        <S.Item>Sitemap</S.Item>
+        <S.Item>Privacy</S.Item>
+        <S.Item>Your Privacy Choices</S.Item>
+        <S.Item>Destinations</S.Item>
+      </S.Section>
 
-      <div className={styles.rightSection}>
-        <span>KOREA (KR)</span>
-        <span>Rp IDR</span>
-        <span>Support & resources</span>
-      </div>
-    </footer>
+      <S.Section>
+        <S.Item>KOREA (KR)</S.Item>
+        <S.Item>Rp IDR</S.Item>
+        <S.Item>Support & resources</S.Item>
+      </S.Section>
+    </S.Footer>
   );
 }
