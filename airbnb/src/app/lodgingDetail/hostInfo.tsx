@@ -4,6 +4,7 @@ import { Poppins } from 'next/font/google';
 import SUPERHOST from '../../../public/superHost.svg';
 import LOCATION from '../../../public/location.svg';
 import KEY from '../../../public/key.svg';
+import Image from 'next/image';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600'] });
 
@@ -13,20 +14,25 @@ type Props = {
   hostProfile: React.ReactElement;
 }
 
-export default function hostInfo (props: Props) {
+export default function HostInfo (props: Props) {
   return (
     <Wrapper>
       <HostInfoContainer>
-        <HostInfo>
+        <HostInformation>
           <HostName className={poppins.className}>{props.hostName}</HostName>
           <Limit className={poppins.className}>{props.limit}</Limit>
-        </HostInfo>
+        </HostInformation>
         {props.hostProfile}
       </HostInfoContainer>
 
       <NoticeContainer>
         <Notice>
-          <SUPERHOST />
+          <Image
+            src="/superHost.svg"
+            alt="슈퍼호스트"
+            width={25}
+            height={35}
+          />
           <NoticeContent>
             <Subtitle className={poppins.className}>슈퍼호스트</Subtitle>
             <Description className={poppins.className}>
@@ -36,7 +42,12 @@ export default function hostInfo (props: Props) {
         </Notice>
 
         <Notice>
-          <LOCATION />
+          <Image
+            src="/location.svg"
+            alt="위치"
+            width={25}
+            height={35}
+          />
           <NoticeContent>
             <Subtitle className={poppins.className}>접근성</Subtitle>
             <Description className={poppins.className}>
@@ -46,7 +57,12 @@ export default function hostInfo (props: Props) {
         </Notice>
 
         <Notice>
-          <SUPERHOST />
+          <Image
+            src="/key.svg"
+            alt="키"
+            width={25}
+            height={35}
+          />
           <NoticeContent>
             <Subtitle className={poppins.className}>순조로운 체크인 절차</Subtitle>
             <Description className={poppins.className}>
@@ -60,7 +76,7 @@ export default function hostInfo (props: Props) {
 }
 
 const Wrapper = styled.div`
-  width: 45.4375rem;
+  width: 50.9375rem;
   display: flex;
   flex-direction: column;
   padding: 2rem;
@@ -71,9 +87,10 @@ const HostInfoContainer = styled.div`
   padding: 1rem;
   justify-content: space-between;
   align-items: center;
+  width: 48.9375rem;
 `;
 
-const HostInfo = styled.div`
+const HostInformation = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -86,6 +103,8 @@ const HostName= styled.span`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  margin: 0;
+  padding: 0;
 `;
 
 const Limit = styled.p`
@@ -95,20 +114,22 @@ const Limit = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  margin: 0;
+  padding: 0;
 `;
 
 const NoticeContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  gap: 1.56rem;
+  gap: 1.88rem;
   justify-content: center;
   align-items: center;
 `;
 
 const Notice = styled.div`
   display: flex;
-  gap: 1.19rem;
+  gap: 1.55rem;
   justify-content: center;
   align-items: center;
 `;
@@ -117,8 +138,8 @@ const NoticeContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.1rem;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
 const Subtitle = styled.span`
@@ -137,5 +158,6 @@ const Description = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  width: 43.9375rem;
+  width: 45.9375rem;
+  margin: 0;
 `;

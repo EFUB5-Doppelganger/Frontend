@@ -5,7 +5,7 @@ import { Poppins } from 'next/font/google';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
 
-export default function price () {
+export default function Price () {
   return (
     <Wrapper>
       <PriceHeader>
@@ -53,14 +53,14 @@ export default function price () {
       <TotalContainer>
         <TotalCalculation>
           <Calculation className={poppins.className}>₩ 140,753 x 4박</Calculation>
-          <Price className={poppins.className}>₩563,012</Price>
+          <PriceText className={poppins.className}>₩563,012</PriceText>
         </TotalCalculation>
 
         <Line3 />
 
         <TotalInfo>
           <TotalText className={poppins.className}>총 금액</TotalText>
-          <Price className={poppins.className}>₩563,012</Price>
+          <PriceText className={poppins.className}>₩563,012</PriceText>
         </TotalInfo>
       </TotalContainer>
     </Wrapper>
@@ -68,8 +68,8 @@ export default function price () {
 }
 
 const Wrapper = styled.div`
-  width: 28.1875rem;
-  height: 36.8125rem;
+  width: 25.1875rem;
+  height: 33.8125rem;
   flex-shrink: 0;
   border-radius: 0.9375rem;
   border: 2px solid #E6E6E6;
@@ -83,7 +83,7 @@ const Wrapper = styled.div`
 `;
 
 const PriceHeader = styled.div`
-  width: 25rem;
+  width: 23rem;
   height: 2.7rem;
   display: flex;
   align-items: center;
@@ -106,7 +106,7 @@ const DuringDate = styled.div`
   font-style: normal;
   font-weight: 300;
   line-height: normal;
-  margin: 0.5rem 4.81rem 0 0.5rem;
+  margin: 0.5rem 3rem 0 0.5rem;
 `;
 
 const StarRating = styled.div`
@@ -120,6 +120,7 @@ const StarRating = styled.div`
 
 const DateSelectContainer = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 const ReviewCount = styled.span`
@@ -141,14 +142,14 @@ const ReservationInfoContainer = styled.div`
   flex-direction: column;
   border: 1px solid #979797;
   border-radius: 1rem;
-  width: 24rem;
+  width: 20rem;
   overflow: visible;
   box-sizing: border-box;
   padding: 0.3rem;
 `;
 
 const SelectDate = styled.div`
-  width: 10rem;
+  width: 8rem;
   height: 2.5125rem;
   flex-shrink: 0;
   background: #FFF;
@@ -175,7 +176,7 @@ const Line = styled.div`
 `;
 
 const Line2 = styled.div`
-  width: 23.5rem;
+  width: 19.5rem;
   height: 0.0625rem;
   background: #979797;
 `;
@@ -191,7 +192,7 @@ const Selection = styled.input`
 `;
 
 const GuestContainer = styled.div`
-  width: 21.4375rem;
+  width: 17.4375rem;
   height: 2.2125rem;
   flex-shrink: 0;
   background: #FFF;
@@ -213,7 +214,7 @@ const GuestCount = styled.select`
 
 const ReservationBtn = styled.button`
   display: flex;
-  width: 24.0625rem;
+  width: 20.0625rem;
   height: 3.75rem;
   padding: 0.625rem;
   justify-content: center;
@@ -244,8 +245,9 @@ const TotalContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding: 0 2rem;
-  margin-top: 5rem;
+  margin-top: 2rem;
   margin-bottom: 1rem;
+  width: 20rem;
 `;
 
 const TotalCalculation = styled.div`
@@ -261,7 +263,7 @@ const Calculation = styled.div`
   line-height: normal;
 `;
 
-const Price = styled.div`
+const PriceText = styled.div`
   color: #3E3E3E;
   text-align: right;
   font-size: 0.875rem;
@@ -271,7 +273,7 @@ const Price = styled.div`
 `;
 
 const Line3 = styled.div`
-  width: 24.0625rem;
+  width: 20.0625rem;
   height: 0.0625rem;
   flex-shrink: 0;
   background: #E6E6E6;
