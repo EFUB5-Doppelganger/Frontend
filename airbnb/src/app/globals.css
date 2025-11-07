@@ -1,38 +1,16 @@
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
-  width: 100vw;
 }
 
-body {
+.layout-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  width: 100vw;
+  min-height: 100vh; 
 }
 
-.header {
-  flex-shrink: 0;
-  height: 60px;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  padding: 1rem 0;
-}
-
-.main {
-  flex: 1 1 auto; /* 가변 성장 및 축소 가능 */
-  min-height: 0;  /* 필수: 부모가 flex일 때 overflow 정상 작동을 위해 */
-  overflow-y: auto; /* 넘칠 때 스크롤 가능 */
-}
-
-.footer {
-  flex-shrink: 0;
-  height: 3.125rem;
-  text-align: center;
-  padding: 1rem 0;
-  background: white;
-  box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
-  font-size: 0.9rem;
-  color: #666;
+.main-content {
+  flex: 1; 
 }
