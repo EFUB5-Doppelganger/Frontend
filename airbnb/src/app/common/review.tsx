@@ -11,22 +11,28 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import Image from 'next/image';
 import { Poppins } from 'next/font/google';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600'] });
 
 type Props = {
-  profileImage: React.ReactElement;
+  profileImage: string;
   userName: string;
   writeDate: string;
   review: string;
 };
 
-export default function review (props: Props) {
+export default function Review (props: Props) {
   return (
     <Wrapper>
       <ProfileContainer>
-        {props.profileImage}
+        <Image
+          src={props.profileImage}
+          alt="프로필 사진"
+          width={40}
+          height={40}
+        />
         <UserInfo>
           <UserName className={poppins.className}>{props.userName}</UserName>
           <WriteDate className={poppins.className}>{props.writeDate}</WriteDate>
@@ -38,7 +44,7 @@ export default function review (props: Props) {
 }
 
 const Wrapper = styled.div`
-  width: 35rem;
+  width: 30rem;
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
@@ -46,7 +52,6 @@ const Wrapper = styled.div`
 `;
 
 const ProfileContainer = styled.div`
-  width: 100vw;
   display: flex;
   justify-content: flex-start;
   align-items: center;

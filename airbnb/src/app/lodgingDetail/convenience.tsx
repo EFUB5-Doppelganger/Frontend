@@ -84,7 +84,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 5rem
+  padding: 5rem 10rem;
 `;
 
 const Header = styled.h1`
