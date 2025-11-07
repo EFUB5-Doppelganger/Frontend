@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 `;
 
 const Line = styled.div`
-  width: 51.1875rem;
+  width: 46.1875rem;
   height: 0.0625rem;
   background: #D5D5D5;
 `;
@@ -56,7 +56,7 @@ const LoginBox = styled.div`
   justify-content: flex-start;
   width: 46.1875rem;
   max-width: 100%;
-  min-height: 70.75rem;
+  min-height: 60.75rem;
   flex-shrink: 0;
   border-radius: 0.9375rem;
   border: 1px solid #000;
