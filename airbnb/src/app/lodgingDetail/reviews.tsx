@@ -43,6 +43,9 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   position: relative;
+  width: 90%;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 `;
 
 const Header = styled.div`
@@ -80,8 +83,8 @@ const MoreBtn = styled.button`
   border-radius: 0.75rem;
   border: 1px solid #3E3E3E;
   position: absolute;
-  right: 42rem;
-  bottom: 8.5rem;
+  right: 22rem;
+  bottom: 3.5rem;
   background: #fff;
 
   color: #3E3E3E;

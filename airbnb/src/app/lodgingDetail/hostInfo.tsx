@@ -79,7 +79,7 @@ const Wrapper = styled.div`
   width: 50.9375rem;
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 0;
 `;
 
 const HostInfoContainer = styled.div`

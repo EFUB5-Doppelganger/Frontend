@@ -61,6 +61,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+  width: 88%;
 `;
 
 const Header = styled.div`
@@ -76,6 +79,7 @@ const Container = styled.div`
   align-items: flex-start;
   gap: 9.3rem;
   margin-bottom: 3rem;
+  width: 100%;
 `;
 
 const SmallContainer = styled.div`

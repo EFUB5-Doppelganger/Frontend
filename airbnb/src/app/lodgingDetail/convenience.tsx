@@ -84,7 +84,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 5rem 10rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  width: 88%;
 `;
 
 const Header = styled.h1`

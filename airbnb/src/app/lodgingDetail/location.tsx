@@ -16,7 +16,7 @@ export default function Location () {
       <Image
         src="/locationImage.svg"
         alt="위치 사진"
-        width={1300}
+        width={1250}
         height={650}
       />
     </Container>
@@ -27,6 +27,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
 `;
 
 const Header = styled.div`

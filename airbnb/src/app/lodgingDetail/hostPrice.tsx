@@ -33,26 +33,30 @@ export default function HostPrice () {
 
 const Wrapper = styled.div`
   display: flex;
-  gap: 3.31rem;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 `;
 
 const LeftContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 0;
+  margin: 0;
+  margin-right: 2rem;
 `;
 
 const Line = styled.div`
-  width: 52.4375rem;
+  width: 50.4375rem;
   height: 0.0625rem;
   flex-shrink: 0;
   background: #E6E6E6;
 `;
 
 const ReservationTimeNotice = styled.div`
-  width: 48.4375rem;
+  width: 46.4375rem;
   height: 2.375rem;
   flex-shrink: 0;
   border-radius: 0.625rem;
