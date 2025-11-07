@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import styled from 'styled-components';
 import { Inter, Poppins } from 'next/font/google';
@@ -14,6 +16,7 @@ export default function signInUP () {
         <LoginHeader>
           <LoginHeaderText className={inter.className}>로그인 또는 회원가입</LoginHeaderText>
         </LoginHeader>
+        <Line />
         <SignIn className={poppins.className}>
           <Info className={poppins.className}>에어비엔비에 오신 것을 환영합니다.</Info>
           <LoginIdPw />
@@ -37,15 +40,23 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 2rem 0;
+`;
+
+const Line = styled.div`
+  width: 51.1875rem;
+  height: 0.0625rem;
+  background: #D5D5D5;
 `;
 
 const LoginBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 51.1875rem;
-  height: 75.75rem;
+  justify-content: flex-start;
+  width: 46.1875rem;
+  max-width: 100%;
+  min-height: 70.75rem;
   flex-shrink: 0;
   border-radius: 0.9375rem;
   border: 1px solid #000;
@@ -53,45 +64,56 @@ const LoginBox = styled.div`
 `;
 
 const LoginHeader = styled.h1`
-  width: 100vw;
-  padding: 2rem;
+  width: 100%;
+  height: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 `;
 
 const LoginHeaderText = styled.span`
-  width: 11.625rem;
-  height: 1.125rem;
-  flex-shrink: 0;
   color: #3E3E3E;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  text-align: center;
 `;
 
 const SignIn = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.5rem;
 `;
 
 const Info = styled.h2`
   color: #3E3E3E;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  width: 100%;
+  text-align: start;
+  padding-left: 11rem;
 `;
 
 const Notice = styled.button`
   color: #000;
-  font-size: 1.25rem;
+  font-size: 0.7rem;
   font-style: normal;
   font-weight: 300;
   line-height: normal;
   text-decoration: underline;
+  background: #fff;
+  border: none;
+  text-align: start;
+  padding-left: 6rem;
+  width: 100%;
+  margin-bottom: 3rem;
+  margin-top: 0.6rem;
 `;
 
 const SignInMethodContainer = styled.div`
