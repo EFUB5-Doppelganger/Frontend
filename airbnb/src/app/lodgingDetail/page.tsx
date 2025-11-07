@@ -2,9 +2,9 @@
 
 import React from 'react';
 import Review from '@/app/common/review';
-import Reviews from '@/app/lodgingDetail/reviews';
+import Location from '@/app/lodgingDetail/location';
 
 
 export default function Page() {
-  return <Reviews />
+  return <Location />
 }

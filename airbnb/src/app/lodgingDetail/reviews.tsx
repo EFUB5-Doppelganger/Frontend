@@ -9,50 +9,41 @@ const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600
 
 export default function Reviews () {
   return (
-    <Wrapper>
-      <Container>
-        <Header>
-          <Image
-            src="/star.svg"
-            alt="별점"
-            width={25}
-            height={25}
-          />
-          <Text className={poppins.className}>4.83</Text>
-          <Text className={poppins.className}>•</Text>
-          <Text className={poppins.className}>1,800 리뷰</Text>
-        </Header>
+    <Container>
+      <Header>
+        <Image
+          src="/star.svg"
+          alt="별점"
+          width={25}
+          height={25}
+        />
+        <Text className={poppins.className}>4.83</Text>
+        <Text className={poppins.className}>•</Text>
+        <Text className={poppins.className}>1,800 리뷰</Text>
+      </Header>
 
-        <ReviewContainer>
-          {reviews.map(({ profileImage, userName, writeDate, review }, index) => (
-            <Review
-              key={index}
-              profileImage={profileImage}
-              userName={userName}
-              writeDate={writeDate}
-              review={review}
-            />
-          ))}
-        </ReviewContainer>
-        <MoreBtn className={poppins.className}>후기 1783개 모두 보기</MoreBtn>
-      </Container>
-    </Wrapper>
+      <ReviewContainer>
+        {reviews.map(({ profileImage, userName, writeDate, review }, index) => (
+          <Review
+            key={index}
+            profileImage={profileImage}
+            userName={userName}
+            writeDate={writeDate}
+            review={review}
+          />
+        ))}
+      </ReviewContainer>
+      <MoreBtn className={poppins.className}>후기 1783개 모두 보기</MoreBtn>
+    </Container>
   );
 }
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5rem 10rem;
-  position: relative;
-`;
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+  position: relative;
+`;
 
 const Header = styled.div`
   display: flex;
