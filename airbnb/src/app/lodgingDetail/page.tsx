@@ -2,9 +2,9 @@
 
 import React from 'react';
 import Review from '@/app/common/review';
-import Notice from '@/app/lodgingDetail/notice';
+import NextTrip from '@/app/lodgingDetail/nextTrip';
 
 
 export default function Page() {
-  return <Notice />
+  return <NextTrip />
 }
