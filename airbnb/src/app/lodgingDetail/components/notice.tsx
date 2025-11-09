@@ -52,7 +52,7 @@ const Header = styled.h1`
   color: #3E3E3E;
   font-size: 1.75rem;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   line-height: normal;
 `;
 

@@ -101,7 +101,7 @@ const HostName= styled.span`
   font-family: Poppins;
   font-size: 1.75rem;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   line-height: normal;
   margin: 0;
   padding: 0;

@@ -3,8 +3,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Inter, Poppins } from 'next/font/google';
-import LoginIdPw  from './loginIdPw';
-import LoginBtn from './loginBtn';
+import LoginIdPw  from './components/loginIdPw';
+import LoginBtn from './components/loginBtn';
 
 const inter = Inter({ subsets: ['latin'], weight: ['300', '700'] });
 const poppins = Poppins({ subsets: ['latin'], weight: '600'});

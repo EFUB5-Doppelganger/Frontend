@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import Link from "next/link";
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
-import HotelCardList from './home/hotelCardList';
-import Navigation from './home/navigation';
+import HotelCardList from './home/components/hotelCardList';
+import Navigation from './home/components/navigation';
 
 const poppins = Poppins({ subsets: ['latin'], weight: '500' });
 

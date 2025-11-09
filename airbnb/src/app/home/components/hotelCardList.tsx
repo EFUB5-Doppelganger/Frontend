@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import HotelCard from './hotelCard';
-import { cards, Props } from './cards';
+import { cards, Props } from '../cards';
 
 export default function HotelCardList () {
   return (

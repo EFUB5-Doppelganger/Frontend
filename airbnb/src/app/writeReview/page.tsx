@@ -92,7 +92,7 @@ export default function writeReview () {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2.12rem 5rem;
+  padding: 2.12rem 13rem;
   position: relative;
   min-height: 100vh;
 `;
@@ -105,6 +105,7 @@ const Header = styled.h1`
   font-weight: 600;
   line-height: normal;
   text-align: left;
+  padding-left: 2rem;
 `;
 
 const ContentContainer = styled.div`

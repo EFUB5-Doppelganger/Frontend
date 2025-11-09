@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { Poppins, Inter } from 'next/font/google';
 import { HiOutlineExclamationTriangle } from 'react-icons/hi2';
-import ReservationItem from './reservationItem';
+import ReservationItem from './components/reservationItem';
 import { reservations, Props } from './reservationListItem';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600'] });
