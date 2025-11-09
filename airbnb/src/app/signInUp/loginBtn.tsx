@@ -29,7 +29,7 @@ const Wrapper = styled.button<{ $loginMethod: string }>`
   fill: #FFF;
   stroke-width: 1px;
   stroke: #3E3E3E;
-  border: ${({ $loginMethod }) => ($loginMethod === "계속" ? "1px solid #FF385C" : "1px solid #3e3e3e")};;
+  border: ${({ $loginMethod }) => ($loginMethod === "계속" ? "1px solid #FF385C" : "1px solid #3e3e3e")};
   border-radius: 0.7rem;
   background: ${({ $loginMethod }) => ($loginMethod === "계속" ? "#FF385C" : "#fff")};
 `;
