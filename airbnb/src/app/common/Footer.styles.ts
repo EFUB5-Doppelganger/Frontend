@@ -4,6 +4,7 @@ export const Footer = styled.footer`
   height: 50px;
   width: 100%;
   min-width: 900px;
+  max-width: 1900px;
   padding: 0 45px;
   display: flex;
   justify-content: space-between;
