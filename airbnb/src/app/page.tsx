@@ -1,10 +1,22 @@
+"use client"
+
+import styled from 'styled-components';
 import Link from "next/link";
+import HotelCardList from './home/hotelCardList';
+import Navigation from './home/navigation';
 
 export default function Home() {
   return (
-    <main>
-      <h1>홈페이지</h1>
-      <Link href="/hostpage">숙소 등록 페이지로 가기</Link>
-    </main>
+    <Wrapper>
+      <Navigation />
+      <HotelCardList />
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+`;
