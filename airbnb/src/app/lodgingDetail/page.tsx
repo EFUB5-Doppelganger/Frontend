@@ -2,14 +2,14 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import Convenience from './convenience';
-import HostDetail from './hostDetail';
-import HostPrice from './hostPrice';
-import Location from './location';
-import NextTrip from './nextTrip';
-import Notice from './notice';
-import Reviews from './reviews';
-import HotelIntroduction from '@/app/lodgingDetail/hotelIntroduction';
+import Convenience from './components/convenience';
+import HostDetail from './components/hostDetail';
+import HostPrice from './components/hostPrice';
+import Location from './components/location';
+import NextTrip from './components/nextTrip';
+import Notice from './components/notice';
+import Reviews from './components/reviews';
+import HotelIntroduction from '@/app/lodgingDetail/components/hotelIntroduction';
 
 
 export default function Page() {

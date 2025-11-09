@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
-import { reviews, Props } from './reviewContent';
+import { reviews, Props } from '../reviewContent';
 import Review from '@/app/common/review';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
