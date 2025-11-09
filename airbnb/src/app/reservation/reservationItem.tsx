@@ -10,6 +10,7 @@ const inter = Inter({ subsets: ['latin'], weight: ['300', '700']});
 type Props = {
   listNum: number;
   image: string;
+  name: string;
   date: string;
   headCount: number;
   price: string;
@@ -30,7 +31,7 @@ export default function ReservationItem (props: Props) {
           width={400}
           height={200}
         />
-        <HotelName className={poppins.className}>Nusa Ceningan, Indonesia</HotelName>
+        <HotelName className={poppins.className}>{props.name}</HotelName>
       </HotelImage>
 
       <ItemContainer>
@@ -103,7 +104,7 @@ const ItemContainer = styled.div`
   align-items: center;
   border-top: 2px solid #d5d5d5;
   height: 19.56rem;
-  padding: 0 4.25rem;
+  padding: 0 2.125rem;
 `;
 
 const CancelBtn = styled.button<{ $cancel: boolean }>`
@@ -116,7 +117,6 @@ const CancelBtn = styled.button<{ $cancel: boolean }>`
   background: ${({ $cancel }) => ($cancel ? "#ff385c" : "#fff")};
   color: ${({ $cancel }) => ($cancel ? "#fff" : "#ff385c")};
 
-  color: #FFF;
   font-family: Inter;
   font-size: 1.125rem;
   font-style: normal;
