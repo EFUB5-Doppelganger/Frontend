@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Footer = styled.footer`
   height: 50px;
   width: 100%;
-  min-width: 900px;
   padding: 0 45px;
   display: flex;
   justify-content: space-between;
@@ -24,7 +23,6 @@ export const Section = styled.div`
 export const Item = styled.span`
   cursor: pointer;
   transition: color 0.2s;
-
   &:hover {
     color: #ff385c;
   }
