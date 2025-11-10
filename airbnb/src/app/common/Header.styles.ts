@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
 export const Header = styled.header`
-  max-width: 1900px;
-  width: 100%;
-  min-width: 900px;
+  width: 1440px;
   height: 92px;
   display: flex;
   align-items: center;
@@ -36,7 +34,6 @@ export const SearchInput = styled.input`
   font-size: 14px;
   color: #707070;
   padding-left: 4px;
-
   &::placeholder {
     color: #bbbbbb;
   }
