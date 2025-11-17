@@ -14,6 +14,20 @@ export interface PostReviewResponse {
   createdAt: string;
 }
 
+export interface ReviewItem {
+  reviewId: number;
+  reviewerName: string;
+  score: number;
+  content: string;
+  createdAt: string;
+}
+
+export interface GetReviewResponse {
+  averageRating: number;
+  totalReviews: number;
+  reviews: ReviewItem[];
+}
+
 // 리뷰 등록 
 export async function postReview(
   data: PostReviewPayload,
@@ -27,5 +41,14 @@ export async function postReview(
       Authorization: `Bearer ${accessToken}`,
     },
     body: JSON.stringify(data),
+  });
+}
+
+// 리뷰 조회
+export async function getReview(
+  accommodationId: number,
+): Promise<GetReviewResponse> {
+  return apiClient<GetReviewResponse>(`/accommodations/${accommodationId}/reviews`, {
+    method: "GET",
   });
 }
