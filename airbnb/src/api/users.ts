@@ -21,6 +21,10 @@ export interface LoginResponse {
   message: string;
 }
 
+export interface SocialLoginResponse {
+  ["redirect-url"]: string;
+}
+
 // 회원가입 
 export async function signUp(data: SignUpPayload): Promise<SignUpResponse> {
   return apiClient<SignUpResponse>("/members", {
@@ -29,10 +33,17 @@ export async function signUp(data: SignUpPayload): Promise<SignUpResponse> {
   });
 }
 
-export async function Login(data: LoginPayload): Promise<LoginResponse> {
+// 로그인 
+export async function login(data: LoginPayload): Promise<LoginResponse> {
   return apiClient<LoginResponse>("/users/login/general", {
     method: "POST",
     body: JSON.stringify(data),
   });
 }
 
+// 소셜 로그인
+export async function socialLogin(): Promise<SocialLoginResponse> {
+  return apiClient<SocialLoginResponse>("/members/kakao", {
+    method: "POST",
+  });
+}
