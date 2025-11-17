@@ -27,6 +27,20 @@ export interface GetPossibleDateResponse {
   reason?: string;
 }
 
+export interface MyReservationItem {
+  accommodationId: number;
+  accommodationName: string;
+  checkIn: string;
+  checkOut: string;
+  guests: number;
+  totalPayment: number;
+}
+
+export interface GetMyReservationsResponse {
+  totalReservation: number;
+  reservation: MyReservationItem[];
+}
+
 // 예약 요청 
 export async function postReservation(data: PostReservationPayload): Promise<PostReservationResponse> {
   return apiClient<PostReservationResponse>("/reservations", {
@@ -52,4 +66,16 @@ export async function getPossibleDate(
       method: "GET",
     }
   );
+}
+
+// 내 예약 조회 
+export async function getMyReservations(
+  accessToken: string
+): Promise<GetMyReservationsResponse> {
+  return apiClient<GetMyReservationsResponse>("/reservations/me", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 }
