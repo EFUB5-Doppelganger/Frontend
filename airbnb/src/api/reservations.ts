@@ -14,6 +14,19 @@ export interface PostReservationResponse {
   createdAt: string;
 }
 
+export interface GetPossibleDatePayload {
+  checkIn: string; 
+  checkOut: string;  
+  guests: number;
+}
+
+export interface GetPossibleDateResponse {
+  isAvailable: boolean;
+  totalPrice: number;
+  detail?: string;
+  reason?: string;
+}
+
 // 예약 요청 
 export async function postReservation(data: PostReservationPayload): Promise<PostReservationResponse> {
   return apiClient<PostReservationResponse>("/reservations", {
@@ -22,3 +35,21 @@ export async function postReservation(data: PostReservationPayload): Promise<Pos
   });
 }
 
+// 예약 가능 날짜 선택
+export async function getPossibleDate(
+  accommodationId: number,
+  params: GetPossibleDatePayload
+): Promise<GetPossibleDateResponse> {
+  const queryString = new URLSearchParams({
+    checkIn: params.checkIn,
+    checkOut: params.checkOut,
+    guests: params.guests.toString(),
+  }).toString();
+
+  return apiClient<GetPossibleDateResponse>(
+    `/accommodations/${accommodationId}/check?${queryString}`,
+    {
+      method: "GET",
+    }
+  );
+}
