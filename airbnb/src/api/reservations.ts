@@ -79,3 +79,15 @@ export async function getMyReservations(
     },
   });
 }
+
+export async function cancelReservation(
+  reservationId: number,
+  accessToken: string
+): Promise<void> {
+  return apiClient<void>(`/reservations/${reservationId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+}
