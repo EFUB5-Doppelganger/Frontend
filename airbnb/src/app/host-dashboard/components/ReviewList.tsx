@@ -15,13 +15,20 @@ import {
   ReviewContent
 } from '../HostDashboardPage.styles';
 
-import { Review } from '../types/host.d';
-
-interface ReviewListProps {
-  reviews: Review[];
+interface ReviewItemType {
+  reviewId: number;
+  reviewerName: string;
+  score: number;
+  content: string;
+  createdAt: string;
 }
 
-const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
+interface ReviewListProps {
+  reviews: ReviewItemType[];
+  averageRating: number;
+}
+
+const ReviewList: React.FC<ReviewListProps> = ({ reviews, averageRating }) => {
   return (
     <>
       <ReviewTitle>후기</ReviewTitle>
@@ -29,22 +36,22 @@ const ReviewList: React.FC<ReviewListProps> = ({ reviews }) => {
       <RatingCards>
         <RatingCard>
           <RatingLabel>전체 평점</RatingLabel>
-          <RatingValue>4.88 ★</RatingValue>
+          <RatingValue>{averageRating.toFixed(2)} ★</RatingValue>
         </RatingCard>
         <RatingCard>
           <RatingLabel>청결도</RatingLabel>
-          <RatingValue>4.88 ★</RatingValue>
+          <RatingValue>{averageRating.toFixed(2)} ★</RatingValue> {/* 임시 */}
         </RatingCard>
       </RatingCards>
 
       <ReviewListWrapper>
         {reviews.map((review) => (
-          <ReviewItem key={review.id}>
+          <ReviewItem key={review.reviewId}>
             <ReviewHeader>
-              <Avatar>{review.avatar}</Avatar>
+              <Avatar>{review.reviewerName.charAt(0)}</Avatar>
               <ReviewMeta>
-                <ReviewName>{review.name}</ReviewName>
-                <ReviewDate>{review.date}</ReviewDate>
+                <ReviewName>{review.reviewerName}</ReviewName>
+                <ReviewDate>{review.createdAt}</ReviewDate>
               </ReviewMeta>
             </ReviewHeader>
             <ReviewContent>{review.content}</ReviewContent>
