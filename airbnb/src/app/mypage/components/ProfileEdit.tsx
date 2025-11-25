@@ -1,5 +1,8 @@
 'use client';
+
 import * as S from '../MyPage.styles';
+import { updateUserProfile } from "@/app/mypage/api/mypage.api";
+import { useState } from "react";
 
 type Props = {
   profile: {
@@ -14,6 +17,36 @@ type Props = {
 };
 
 export default function ProfileEdit({ profile, setProfile, setIsEditing }: Props) {
+  const [loading, setLoading] = useState(false);
+
+  const handleComplete = async () => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const payload = {
+        bio: profile.introduction, 
+      };
+
+      const result = await updateUserProfile(token, payload);
+      if (result) {
+        alert("프로필이 성공적으로 수정되었습니다.");
+        setIsEditing(false);
+      } else {
+        alert("수정에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("수정 중 오류 발생:", error);
+      alert("오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <S.EditView>
       <S.EditHeader>
@@ -80,8 +113,8 @@ export default function ProfileEdit({ profile, setProfile, setIsEditing }: Props
       </S.IntroSection>
 
       <S.ButtonWrapper>
-        <S.CompleteButton onClick={() => setIsEditing(false)}>
-          완료
+        <S.CompleteButton onClick={handleComplete} disabled={loading}>
+          {loading ? "저장 중..." : "완료"}
         </S.CompleteButton>
       </S.ButtonWrapper>
     </S.EditView>
