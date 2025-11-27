@@ -1,13 +1,39 @@
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Inter, Poppins } from 'next/font/google';
 import Image from 'next/image';
+import { postReview } from "@/api/reviews";
+
 const inter = Inter({ subsets: ['latin'], weight: ['100', '300', '500', '700'] });
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600'] });
 
-export default function writeReview () {
+type Props = {
+  accommodationId: string;
+  reservationId: string;
+}
+
+export default function writeReview ({ accommodationId, reservationId }: Props) {
+  const [review, setReview] = useState("");
+
+  const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setReview(e.target.value);
+      return;
+    };
+
+  const handleWriteReview = async () => {
+    try {
+      const res = await postReview({
+        data: review,
+        accommodationId: accommodationId,
+        reservationId: reservationId,
+        accessToken
+      })
+    } catch (error) {
+      console.log("리뷰 작성 에러: ", error);
+    }
+  }
   return (
     <Wrapper>
       <Header className={poppins.className}>후기 작성</Header>
@@ -78,13 +104,15 @@ export default function writeReview () {
 
             <ReviewBox 
               className={inter.className} 
+              value={review}
+              onChange={handleReviewChange}
               placeholder="호스트가 어떻게 회원님을 맞이하셨나요? 숙소 설명은 정확하였나요?" 
             />
           </ReviewWriteContainer>
         </ReviewContainer>
       </ContentContainer>
 
-      <FinishBtn className={inter.className}>완료</FinishBtn>
+      <FinishBtn onClick={handleWriteReview} className={inter.className}>완료</FinishBtn>
     </Wrapper>
   );
 }

@@ -13,16 +13,18 @@ export interface SignUpResponse {
 }
 
 export interface LoginPayload {
-  accessToken: string;
+  userId: string;
+  password: string;
 }
 
 export interface LoginResponse {
   success: boolean;
   message: string;
+  accessToken?: string; // 로그인 성공 시 토큰 반환
 }
 
 export interface SocialLoginResponse {
-  ["redirect-url"]: string;
+  "redirect-url": string;
 }
 
 // 회원가입 

@@ -4,15 +4,34 @@ import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'], weight: '300' });
 
-export default function loginIdPw () {
+type Props = {
+  userId: string;
+  userPw: string;
+  onIdChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onPwChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export default function loginIdPw ({ userId, userPw, onIdChange, onPwChange }: Props) {
+
   return (
     <Wrapper>
       <TextBox>
-        <EnterBox placeholder="아이디를 입력하세요" className={inter.className} />
+        <EnterBox 
+          placeholder="아이디를 입력하세요" 
+          className={inter.className} 
+          value={userId}
+          onChange={onIdChange}
+        />
       </TextBox>
       <Line />
       <TextBox>
-        <EnterBox placeholder="비밀번호를 입력하세요" className={inter.className} />
+        <EnterBox 
+          placeholder="비밀번호를 입력하세요" 
+          type="password" 
+          className={inter.className} 
+          value={userPw} 
+          onChange={onPwChange}
+        />
       </TextBox>
     </Wrapper>
   )

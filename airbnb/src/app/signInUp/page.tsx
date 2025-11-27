@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Inter, Poppins } from 'next/font/google';
 import LoginIdPw  from './components/loginIdPw';
@@ -10,6 +10,16 @@ const inter = Inter({ subsets: ['latin'], weight: ['300', '700'] });
 const poppins = Poppins({ subsets: ['latin'], weight: '600'});
 
 export default function signInUP () {
+  // user Id, Pw 
+  const [userId, setUserId] = useState('');
+  const [userPw, setUserPw] = useState('');
+  
+  const handleIdPwChange = (setter: React.Dispatch<React.SetStateAction<string>>) => {
+    return (e: React.ChangeEvent<HTMLInputElement>) => {
+      setter(e.target.value);
+    };
+  };
+
   return (
     <Wrapper className={inter.className}>
       <LoginBox>
@@ -19,17 +29,22 @@ export default function signInUP () {
         <Line />
         <SignIn className={poppins.className}>
           <Info className={poppins.className}>에어비엔비에 오신 것을 환영합니다.</Info>
-          <LoginIdPw />
+          <LoginIdPw 
+            userId={userId}
+            userPw={userPw}
+            onIdChange={handleIdPwChange(setUserId)}
+            onPwChange={handleIdPwChange(setUserPw)} 
+          />
           <Notice className={inter.className}>개인정보처리방침</Notice>
-          <LoginBtn loginMethod="계속" />
+          <LoginBtn loginMethod="계속" userId={userId} userPw={userPw} />
         </SignIn>
         <DividerWithText>
           <span>또는</span>
         </DividerWithText>
         <SignInMethodContainer>
-          <LoginBtn loginMethod="네이버" />
-          <LoginBtn loginMethod="구글" />
-          <LoginBtn loginMethod="이메일" />
+          <LoginBtn loginMethod="카카오톡" userId="" userPw="" />
+          <LoginBtn loginMethod="구글" userId="" userPw="" />
+          <LoginBtn loginMethod="이메일" userId="" userPw="" />
         </SignInMethodContainer>
       </LoginBox>
     </Wrapper>
