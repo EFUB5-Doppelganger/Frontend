@@ -1,17 +1,89 @@
 "use client"
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
 import { Poppins, Inter } from 'next/font/google';
-import { HiOutlineExclamationTriangle } from 'react-icons/hi2';
 import ReservationItem from './components/reservationItem';
-import { reservations, Props } from './reservationListItem';
+import { getMyReservations, cancelReservation, MyReservationItem } from "@/api/reservations";
+
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600'] });
 const inter = Inter({ subsets: ['latin'], weight: ['300', '700']});
 
 export default function Reservation () {
+  const [reservations, setReservations] = useState<MyReservationItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // accessToken 가져오기
+  const getAccessToken = () => {
+    if (typeof window != 'undefined') {
+      return localStorage.getItem('accessToken') || '';
+    }
+    return '';
+  };
+
+  // 예약 목록 조회 
+  const fetchReservations = async () => {
+    try {
+      setLoading(true);
+      const accessToken = getAccessToken();
+
+      if (!accessToken) {
+        setError('로그인이 필요합니다.');
+        return;
+      }
+
+      const response = await getMyReservations(accessToken);
+      setReservations(response.reservation);
+      setError(null);
+    } catch (err) {
+      console.error('예약 조회 실패: ', err);
+      setError('예약 조회에 실패했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchReservations();
+  }, []);
+
+  // 예약 취소 핸들러
+  const handleCancelReservation = async (reservationId: number) => {
+    if (!confirm('정말 예약을 취소하시겠습니까?')) {
+      return;
+    }
+
+    try {
+      const accessToken = getAccessToken();
+
+      await cancelReservation(reservationId, accessToken);
+      alert('예약이 취소되었습니다.');
+      fetchReservations();
+    } catch (err) {
+      console.error("예약 취소 실패: ", err);
+      alert('예약 취소에 실패했습니다.');
+    }
+  };
+
+  if (loading) {
+    return (
+      <Wrapper>
+        <LoadingText>로딩 중...</LoadingText>
+      </Wrapper>
+    );
+  }
+
+  if (error) {
+    return (
+      <Wrapper>
+        <ErrorText>{error}</ErrorText>
+      </Wrapper>
+    );
+  }
+
+
   return (
     <Wrapper>
       <Header className={poppins.className}>예약 내역</Header>
@@ -26,16 +98,18 @@ export default function Reservation () {
           <Title5 className={poppins.className}>예약 취소</Title5>
         </ListHeader>
 
-        {reservations.map(({ listNum, image, name, date, headCount, price, cancel }, index) => (
+        {reservations.map((reservation, index) => (
           <ReservationItem
-            key={index}
-            listNum={listNum}
-            image={image}
-            name={name}
-            date={date}
-            headCount={headCount}
-            price={price}
-            cancel={cancel}
+            key={reservation.reservationId}
+            listNum={index + 1}
+            reservationId={reservation.reservationId}
+            accommodationId={reservation.accommodationId}
+            accommodationName={reservation.accommodationName}
+            checkIn={reservation.checkIn}
+            checkOut={reservation.checkOut}
+            guests={reservation.guests}
+            totalPayment={reservation.totalPayment}
+            onCancel={handleCancelReservation}
           />
         ))}
       </ItemList>
@@ -134,4 +208,16 @@ const Title5 = styled.h2`
 const Title6 = styled.h2`
   width: 5rem;
   text-align: center;
+`;
+
+const LoadingText = styled.div`
+  font-size: 1.25rem;
+  color: #979797;
+  padding: 2rem;
+`;
+
+const ErrorText = styled.div`
+  font-size: 1.25rem;
+  color: #ff385c;
+  padding: 2rem;
 `;

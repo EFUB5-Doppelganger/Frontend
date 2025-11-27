@@ -11,8 +11,8 @@ import Notice from './components/notice';
 import Reviews from './components/reviews';
 import HotelIntroduction from '@/app/lodgingDetail/components/hotelIntroduction';
 
-
 export default function Page() {
+
   return (
     <Wrapper>
       <Container>

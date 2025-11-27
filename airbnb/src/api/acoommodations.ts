@@ -1,5 +1,4 @@
-import { apiClient } from "@/api/client"; 
-import { Dict } from "styled-components/dist/types";
+import { apiClient } from "@/api/client";
 
 export interface AccommodationCard {
   id: string;

@@ -28,8 +28,12 @@ export interface GetPossibleDateResponse {
 }
 
 export interface MyReservationItem {
+  reservationId: number;
   accommodationId: number;
   accommodationName: string;
+  imageUrl: null;
+  location: string;
+  price: number;
   checkIn: string;
   checkOut: string;
   guests: number;

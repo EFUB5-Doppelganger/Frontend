@@ -2,22 +2,59 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { Poppins, Inter } from 'next/font/google';
-import { HiOutlineExclamationTriangle } from 'react-icons/hi2';
+import { useRouter } from 'next/navigation';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600'] });
 const inter = Inter({ subsets: ['latin'], weight: ['300', '700']});
 
 type Props = {
   listNum: number;
-  image: string;
-  name: string;
-  date: string;
-  headCount: number;
-  price: string;
-  cancel: boolean;
+  reservationId: number;
+  accommodationId: number;
+  accommodationName: string;
+  checkIn: string;
+  checkOut: string;
+  guests: number;
+  totalPayment: number;
+  onCancel: (reservationId: number) => void;
 }
 
 export default function ReservationItem (props: Props) {
+  const router = useRouter();
+
+  // 체크아웃 날짜가 지났는지 확인
+  const isCheckoutPassed = () => {
+    const checkoutDate = new Date(props.checkOut);
+    const today = new Date();
+    return checkoutDate < today;
+  };
+
+  // 예약 취소 버튼 클릭
+  const handleCancelClick = () => {
+    props.onCancel(props.reservationId);
+  };
+
+  // 후기 작성 버튼 클릭
+  const handleReviewClick = () => {
+    router.push(`/reviews/write?accommodationId=${props.reservationId}`);
+  };
+
+  // 날짜 포맷팅
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  // 금액 포맷팅
+  const formatPrice = (price: number) => {
+    return `${price.toLocaleString()}`;
+  };
+
+
   return (
     <Wrapper>
       <ItemContainer>
@@ -26,32 +63,49 @@ export default function ReservationItem (props: Props) {
 
       <HotelImage>
         <Image 
-          src={props.image}
+          src="/hotel/hotel2.svg"
           alt="호텔 이미지"
           width={400}
           height={200}
         />
-        <HotelName className={poppins.className}>{props.name}</HotelName>
+        <HotelName className={poppins.className}>{props.accommodationName}</HotelName>
       </HotelImage>
 
       <ItemContainer>
-        <TextContainer className={inter.className}>{props.date}</TextContainer>
+        <TextContainer className={inter.className}>
+          {formatDate(props.checkIn)} - {formatDate(props.checkOut)}
+        </TextContainer>
       </ItemContainer>
+
       <ItemContainer>
-        <TextContainer className={inter.className}>{props.headCount}</TextContainer>
+        <TextContainer className={inter.className}>{props.guests}명</TextContainer>
       </ItemContainer>
+
       <ItemContainer>
-        <TextContainer className={inter.className}>{props.price}</TextContainer>
+        <TextContainer className={inter.className}>
+          {formatPrice(props.totalPayment)}
+        </TextContainer>
       </ItemContainer>
       
-      {props.cancel ? 
-        <ItemContainer>
-          <CancelBtn $cancel={props.cancel} className={inter.className}>예약 취소</CancelBtn>
-        </ItemContainer> :
-        <ItemContainer>
-          <CancelBtn $cancel={props.cancel} className={inter.className}>후기 작성</CancelBtn>
-        </ItemContainer>
-      }
+      <ItemContainer>
+        {isCheckoutPassed() ? (
+          <CancelBtn 
+            $cancel={false} 
+            className={inter.className}
+            onClick={handleReviewClick}
+          >
+            후기 작성
+          </CancelBtn>
+        ) : (
+          <CancelBtn 
+            $cancel={true} 
+            className={inter.className}
+            onClick={handleCancelClick}
+          >
+            예약 취소
+          </CancelBtn>
+        )}
+      </ItemContainer>
     </Wrapper>
   );
 }
