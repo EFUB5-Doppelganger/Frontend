@@ -1,39 +1,100 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Inter, Poppins } from 'next/font/google';
 import Image from 'next/image';
+import { useRouter, useSearchParams } from "next/navigation";
 import { postReview } from "@/api/reviews";
 
 const inter = Inter({ subsets: ['latin'], weight: ['100', '300', '500', '700'] });
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600'] });
 
-type Props = {
-  accommodationId: string;
-  reservationId: string;
-}
+export default function WriteReview () {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-export default function writeReview ({ accommodationId, reservationId }: Props) {
   const [review, setReview] = useState("");
+  const [rating, setRating] = useState(0);
+  const [hoveredRating, setHoveredRating] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // URL에서 파라미터 가져오기
+  const accommodationId = searchParams.get('accommodationId') || '';
+  const reservationId = searchParams.get('reservationId') || '';
+
+  // accessToken 가져오기
+  const getAccessToken = () => {
+    if (typeof window != 'undefined') {
+      return localStorage.getItem('accessToken') || '';
+    }
+    return '';
+  };
+
+  useEffect (() => {
+    // accommodationId 없을 시 예약 조회 페이지로 이동
+    if (!accommodationId) {
+      alert('잘못된 접근입니다.');
+      router.push('/reservations');
+    }
+  }, [accommodationId, router]);
+
+  const handleReviewChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value.length <= 500) {
       setReview(e.target.value);
-      return;
-    };
+    }
+  };
+
+  const handleStarClick = (starIndex: number) => {
+    setRating(starIndex);
+  };
+
+  const handleStarHover = (starIndex: number) => {
+    setHoveredRating(starIndex);
+  };
+
+  const handleStarLeave = () => {
+    setHoveredRating(0);
+  };
 
   const handleWriteReview = async () => {
+    // 유효성 검사
+    if (rating === 0) {
+      alert('별점을 선택해주세요.');
+      return;
+    }
+
     try {
-      const res = await postReview({
-        data: review,
-        accommodationId: accommodationId,
-        reservationId: reservationId,
-        accessToken
-      })
+      setIsSubmitting(true);
+      const accessToken = getAccessToken();
+
+      if (!accessToken) {
+        alert('로그인이 필요합니다.');
+        router.push('/signInUp');
+        return;
+      }
+
+      await postReview(
+        {
+          title: "리뷰 제목",
+          content: review.trim(),
+          score: rating,
+        },
+        accommodationId,
+        reservationId,
+        accessToken,
+      );
+
+      alert('후기가 성공적으로 작성되었습니다!');
+      router.push('/reservations');
     } catch (error) {
       console.log("리뷰 작성 에러: ", error);
+    } finally {
+      setIsSubmitting(false);
     }
-  }
+  };
+
+
   return (
     <Wrapper>
       <Header className={poppins.className}>후기 작성</Header>
@@ -64,36 +125,30 @@ export default function writeReview ({ accommodationId, reservationId }: Props) 
             <Title className={inter.className}>숙박이 어땠나요?</Title>
             <Subtitle className={inter.className}>전체적 만족도(필수 항목)</Subtitle>
             <StarRating>
-              <Image 
-                src="/star.svg"
-                alt="별점"
-                width={20}
-                height={20}
-              />
-              <Image 
-                src="/star.svg"
-                alt="별점"
-                width={20}
-                height={20}
-              />
-              <Image 
-                src="/star.svg"
-                alt="별점"
-                width={20}
-                height={20}
-              />
-              <Image 
-                src="/star.svg"
-                alt="별점"
-                width={20}
-                height={20}
-              />
-              <Image 
-                src="/star.svg"
-                alt="별점"
-                width={20}
-                height={20}
-              />
+              {[1, 2, 3, 4, 5].map((starIndex) => (
+                <StarButton
+                  key={starIndex}
+                  onClick={() => handleStarClick(starIndex)}
+                  onMouseEnter={() => handleStarHover(starIndex)}
+                  onMouseLeave={handleStarLeave}
+                  $filled={starIndex <= (hoveredRating || rating)}
+                >
+                  <Image 
+                    src="/star.svg"
+                    alt="별점"
+                    width={30}
+                    height={30}
+                    style={{
+                      filter: starIndex <= (hoveredRating || rating) 
+                        ? 'brightness(0) saturate(100%) invert(47%) sepia(94%) saturate(3456%) hue-rotate(336deg) brightness(100%) contrast(101%)'
+                        : 'none'
+                    }}
+                  />
+                </StarButton>
+              ))}
+              <RatingText className={inter.className}>
+                {rating > 0 && `${rating}점`}
+              </RatingText>
             </StarRating>
 
             <Subtitle className={inter.className}>공개 후기</Subtitle>
@@ -108,11 +163,21 @@ export default function writeReview ({ accommodationId, reservationId }: Props) 
               onChange={handleReviewChange}
               placeholder="호스트가 어떻게 회원님을 맞이하셨나요? 숙소 설명은 정확하였나요?" 
             />
+
+            <CharCount className={inter.className}>
+              {review.length} / 500자 
+            </CharCount>
           </ReviewWriteContainer>
         </ReviewContainer>
       </ContentContainer>
 
-      <FinishBtn onClick={handleWriteReview} className={inter.className}>완료</FinishBtn>
+      <FinishBtn 
+        onClick={handleWriteReview}
+        className={inter.className}
+        disabled={isSubmitting}
+      >
+        {isSubmitting ? '작성 중...' : '완료'}
+      </FinishBtn>
     </Wrapper>
   );
 }
@@ -223,9 +288,29 @@ const Subtitle = styled.h3`
 
 const StarRating = styled.div`
   display: flex;
-  gap: 0.3rem;
+  align-items: center;
+  gap: 0.5rem;
   margin: 0;
   margin-bottom: 1rem;
+`;
+
+const StarButton = styled.button<{ $filled: boolean }>`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+const RatingText = styled.span`
+  color: #FF385C;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
 `;
 
 const ReviewBox = styled.textarea`
@@ -240,6 +325,7 @@ const ReviewBox = styled.textarea`
   line-height: normal;
   color: #000;
   outline: none;
+
   ::placeholder {
     color: #979797;
     font-size: 1.0625rem;
@@ -248,6 +334,17 @@ const ReviewBox = styled.textarea`
     line-height: normal;
     text-align: start;
   }
+
+  &:focus {
+    border-color: #ff386c;
+  }
+`;
+
+const CharCount = styled.div`
+  color: #979797;
+  font-size: 0.875rem;
+  text-align: right;
+  margin-top: 0.5rem;
 `;
 
 const FinishBtn = styled.button`
@@ -265,4 +362,13 @@ const FinishBtn = styled.button`
   position: absolute;
   bottom: 15rem;
   right: 12rem;
+
+  &:hover:not(:disabled) {
+    background: #E31C5F;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `;
