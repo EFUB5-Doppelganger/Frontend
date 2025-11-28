@@ -1,28 +1,52 @@
 'use client';
 
+import { useEffect, useState } from "react";
+import { getUserProfile } from "@/app/mypage/api/mypage.api";
 import * as S from '../MyPage.styles';
 
+// props type 정의
 type Props = {
   setIsEditing: (editing: boolean) => void;
 };
 
+// profile type 정의
+type Profile = {
+  nickname: string;
+  id: string;
+  bio: string;
+  bornYear: string;
+  job: string;
+};
+
 export default function ProfileView({ setIsEditing }: Props) {
+  const [profile, setProfile] = useState<Profile | null>(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return;
+
+      const data = await getUserProfile(token);
+      if (data) setProfile(data);
+    };
+
+    fetchProfile();
+  }, []);
+
   return (
     <>
-      {/* 상단 제목 + 수정 뱃지 */}
       <S.Header>
         <S.HeaderTitle>자기소개</S.HeaderTitle>
         <S.EditBadge>수정</S.EditBadge>
       </S.Header>
 
-      {/* 본문: 좌측 프로필 카드 + 우측 작성 안내 */}
       <S.ContentWrapper>
         <S.ProfileCard>
           <S.ProfileAvatar>
-            <span>하</span>
+            <span>{profile?.nickname?.charAt(0) ?? "?"}</span>
           </S.ProfileAvatar>
-          <S.ProfileName>하경</S.ProfileName>
-          <S.ProfileLabel>게스트</S.ProfileLabel>
+          <S.ProfileName>{profile?.nickname ?? "불러오는 중..."}</S.ProfileName>
+          <S.ProfileLabel>{profile?.job ?? "직업 미입력"}</S.ProfileLabel>
         </S.ProfileCard>
 
         <S.InfoSection>
@@ -36,7 +60,6 @@ export default function ProfileView({ setIsEditing }: Props) {
         </S.InfoSection>
       </S.ContentWrapper>
 
-      {/* 하단 후기 섹션 */}
       <S.Footer>
         <S.FooterLink>
           <S.LinkIcon />
