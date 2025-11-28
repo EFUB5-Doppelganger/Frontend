@@ -1,15 +1,98 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
+import { getAccommodationCheck, GetAccommodationCheckResponse } from '@/api/acoommodations';
+import { useSearchParams } from 'next/navigation';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
 
-export default function Price () {
+type Props = {
+  dailyPrice: number;
+  rating: number;
+  maxGuests: number;
+};
+
+export default function Price ({ dailyPrice, rating, maxGuests }: Props) {
+  const searchParams = useSearchParams();
+
+  const [check, setCheck] = useState<GetAccommodationCheckResponse | null>(null);
+  const [checkIn, setCheckIn] = useState('');
+  const [checkOut, setCheckOut] = useState('');
+  const [guests, setGuests] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const accommodationId = searchParams.get('accommodationId') || '';
+
+  // 날짜 차이 계산
+  const calculateNights = (): number => {
+    if (!checkIn || !checkOut) return 0;
+    const checkInDate = new Date(checkIn);
+    const checkOutDate = new Date(checkOut);
+    const diffTime = checkOutDate.getTime() - checkInDate.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays > 0 ? diffDays : 0;
+  };
+
+  const nights = calculateNights();
+
+  const fetchCheck = async () => {
+    try {
+      const res = await getAccommodationCheck(
+        {
+          checkIn,
+          checkOut,
+          guests
+        },
+        Number(accommodationId)
+      );
+      setCheck(res);
+    } catch (err) {
+      console.error("예약 가능 날짜 조회 실패: ", err);
+    }
+  };
+
+  // 체크인/체크아웃 날짜 변경 핸들러 
+  const handleCheckIn = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckIn(e.target.value);
+  };
+
+  const handleCheckOut = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckOut(e.target.value);
+  };
+
+  // 인원 수 변경 핸들러 
+  const handleGuests = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setGuests(Number(e.target.value));
+  };
+
+  // 예약 버튼 핸들러 
+  const handleClickReserve = () => {
+    fetchCheck();
+  };
+
+  const renderGuestOptions = () => {
+    const options = [];
+    for (let i = 1; i <= maxGuests; i++) {
+      options.push(
+        <option key={i} value={i}>
+          게스트 {i}명
+        </option>
+      );
+    }
+    return options;
+  };
+
+  // 오늘 날짜를 YYYY-MM-DD 형식으로 반환 (최소 날짜 제한용)
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
   return (
     <Wrapper>
       <PriceHeader>
-        <TotalPrice className={poppins.className}>₩140,753</TotalPrice>
+        <TotalPrice className={poppins.className}>₩{dailyPrice.toLocaleString()}</TotalPrice>
         <DuringDate className={poppins.className}>1박</DuringDate>
         <Image
           src="/star.svg"
@@ -17,7 +100,7 @@ export default function Price () {
           width={20}
           height={20}
         />
-        <StarRating className={poppins.className}>4.83</StarRating>
+        <StarRating className={poppins.className}>{rating}</StarRating>
         <ReviewCount className={poppins.className}>1,800 리뷰</ReviewCount>
       </PriceHeader>
 
@@ -25,44 +108,73 @@ export default function Price () {
         <DateSelectContainer>
           <SelectDate>
             <SelectionTitle className={poppins.className}>체크인</SelectionTitle>
-            <Selection type="date" className={poppins.className} />
+            <Selection 
+              type="date" 
+              value={checkIn}
+              onChange={handleCheckIn} 
+              className={poppins.className} 
+            />
           </SelectDate>
           <Line />
           <SelectDate>
             <SelectionTitle className={poppins.className}>체크아웃</SelectionTitle>
-            <Selection type="date" className={poppins.className} />
+            <Selection 
+              type="date" 
+              value={checkOut}
+              onChange={handleCheckOut} 
+              min={checkIn || getTodayDate()}
+              disabled={!checkIn}
+              className={poppins.className}
+            />
           </SelectDate>
         </DateSelectContainer>
         <Line2 />
         <GuestContainer>
           <SelectionTitle className={poppins.className}>인원</SelectionTitle>
-          <GuestCount className={poppins.className}>
-            <option value="1">게스트 1명</option>
-            <option value="2">게스트 2명</option>
-            <option value="3">게스트 3명</option>
-            <option value="4">게스트 4명</option>
+          <GuestCount 
+            value={guests}
+            onChange={handleGuests} 
+            className={poppins.className}
+          >
+            {renderGuestOptions()}
           </GuestCount>
         </GuestContainer>
       </ReservationInfoContainer>
 
-      <ReservationBtn className={poppins.className}>예약</ReservationBtn>
+      <ReservationBtn onClick={handleClickReserve} className={poppins.className}>예약</ReservationBtn>
       <ReservationNotice className={poppins.className}>
         예약 확정 전에는 요금이 청구되지 않습니다.
       </ReservationNotice>
 
-      <TotalContainer>
+      {isLoading ? (
+        <LoadingText className={poppins.className}>가격 계산 중...</LoadingText>
+      ) : check ? (
+        <TotalContainer>
         <TotalCalculation>
-          <Calculation className={poppins.className}>₩ 140,753 x 4박</Calculation>
-          <PriceText className={poppins.className}>₩563,012</PriceText>
-        </TotalCalculation>
+          <Calculation className={poppins.className}>
+            ₩ {dailyPrice.toLocaleString()} x {nights}박
+          </Calculation>
+          <PriceText className={poppins.className}>
+            ₩{check.totalPrice.toLocaleString()}
+          </PriceText>
+         </TotalCalculation>
 
         <Line3 />
 
         <TotalInfo>
           <TotalText className={poppins.className}>총 금액</TotalText>
-          <PriceText className={poppins.className}>₩563,012</PriceText>
+          <PriceText className={poppins.className}>
+            ₩{check.totalPrice.toLocaleString()}
+          </PriceText>
         </TotalInfo>
       </TotalContainer>
+      ) : (
+        checkIn && checkOut && (
+          <NoDataText className={poppins.className}>
+            선택한 날짜의 예약 정보를 불러올 수 없습니다.
+          </NoDataText>
+        )
+      )}
     </Wrapper>
   )
 }
@@ -229,6 +341,7 @@ const ReservationBtn = styled.button`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+  cursor: pointer;
 `;
 
 const ReservationNotice = styled.div`
@@ -290,4 +403,18 @@ const TotalText = styled.span`
   font-style: normal;
   font-weight: 600;
   line-height: normal;
+`;
+
+const LoadingText = styled.div`
+  color: #717171;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 1rem;
+`;
+
+const NoDataText = styled.div`
+  color: #717171;
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 1rem;
 `;
