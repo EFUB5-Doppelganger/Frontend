@@ -1,7 +1,7 @@
 "use client"
 
+import { useState } from 'react';
 import styled from 'styled-components';
-import Link from "next/link";
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
 import HotelCardList from './home/components/hotelCardList';
@@ -11,10 +11,13 @@ const poppins = Poppins({ subsets: ['latin'], weight: '500' });
 
 
 export default function Home() {
+  const [sortBy, setSortBy] = useState<'createdAt' | 'rating'>('createdAt');
+
+
   return (
     <Wrapper>
-      <Navigation />
-      <HotelCardList />
+      <Navigation sortBy={sortBy} onSortChange={setSortBy} />
+      <HotelCardList sortBy={sortBy} />
       <MapBtn>
         <Map className={poppins.className}>Show map</Map>
         <Image 
