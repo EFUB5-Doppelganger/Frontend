@@ -42,7 +42,7 @@ export default function loginBtn ({ loginMethod, userId, userPw }: LoginBtnProps
         password: userPw,
       });
 
-      if (loginRes.success && loginRes.accessToken) {
+      if (loginRes.accessToken) {
         // 토큰 저장 
         localStorage.setItem('accessToken', loginRes.accessToken);
         console.log("자동 로그인 성공: ", loginRes);
@@ -59,11 +59,13 @@ export default function loginBtn ({ loginMethod, userId, userPw }: LoginBtnProps
           password: userPw,
         });
         console.log("로그인 성공!");
+        console.log("로그인 res: ", loginRes);
 
-        if (loginRes.success && loginRes.accessToken) {
+        if (loginRes.accessToken) {
           localStorage.setItem('accessToken', loginRes.accessToken);
           console.log("로그인 성공:", loginRes);
-          router.push('/dashboard');
+          router.push('/');
+
         }
       } catch (error) {
         console.error("로그인 오류: ", error);

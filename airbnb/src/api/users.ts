@@ -29,7 +29,7 @@ export interface SocialLoginResponse {
 
 // 회원가입 
 export async function signUp(data: SignUpPayload): Promise<SignUpResponse> {
-  return apiClient<SignUpResponse>("/members", {
+  return apiClient<SignUpResponse>("/users/signup", {
     method: "POST",
     body: JSON.stringify(data),
   });
@@ -45,7 +45,7 @@ export async function login(data: LoginPayload): Promise<LoginResponse> {
 
 // 소셜 로그인
 export async function socialLogin(): Promise<SocialLoginResponse> {
-  return apiClient<SocialLoginResponse>("/members/kakao", {
+  return apiClient<SocialLoginResponse>("/users/login/kakao", {
     method: "POST",
   });
 }
