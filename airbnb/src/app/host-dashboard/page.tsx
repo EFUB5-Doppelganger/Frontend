@@ -12,40 +12,45 @@ import ReviewList from './components/ReviewList';
 import ReservationCard from './components/ReservationCard';
 
 import { getMyAccommodations, getAccommodationReviews } from './api/accommodationApi';
+import { getMyReservations } from '../../api/reservations';
 
 const HostDashboardPage = () => {
   const [activeTab, setActiveTab] = useState<'hostel' | 'review' | 'nearby'>('hostel');
-  const [accessToken, setAccessToken] = useState(''); // 실제 연동 시 localStorage 등에서 가져오면 됨
 
   const [accommodations, setAccommodations] = useState<any[]>([]);
   const [reviews, setReviews] = useState<any[]>([]);
   const [averageRating, setAverageRating] = useState(0);
-  const [reservations, setReservations] = useState<any[]>([]); // 예약 API 연결되면 여기에 적용
+
+  const [reservations, setReservations] = useState<any[]>([]); 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getMyAccommodations(accessToken);
-        setAccommodations(data.reviews || []);
+        const accData = await getMyAccommodations();
+        setAccommodations(accData || []);  // ← reviews 제거
 
-        // 기본 숙소 하나에 대한 리뷰 조회 (예시: 첫 번째 숙소)
-        if (data.reviews?.[0]) {
-          const reviewData = await getAccommodationReviews(data.reviews[0].id);
+        if (accData?.[0]) {
+          const reviewData = await getAccommodationReviews(accData[0].id);
           setReviews(reviewData.reviews || []);
           setAverageRating(reviewData.averageRating || 0);
         }
+  
+        const reservationData = await getMyReservations();
+        setReservations(reservationData.reservation || []);
+  
       } catch (error) {
-        console.error('숙소 및 리뷰 불러오기 실패:', error);
+        console.error('대시보드 데이터 불러오기 실패:', error);
       }
     };
-
+  
     fetchData();
-  }, [accessToken]);
+  }, []); 
 
   return (
     <Container>
       <Section>
         <SectionTitle>숙소 관리</SectionTitle>
+
         <TabBar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
@@ -54,31 +59,40 @@ const HostDashboardPage = () => {
           reservationCount={reservations.length}
         />
 
+        {/* 탭 1: 내 숙소 */}
         {activeTab === 'hostel' &&
           accommodations.map((acc) => (
             <PropertyCard
               key={acc.id}
               name={acc.name}
-              dailyPrice={acc.dailyPrice}
+              dailyPrice={acc.price}
               rating={acc.rating}
-              photos={acc.photos}
-            />
+              image={acc.image}
+             />
           ))}
 
+        {/* 탭 2: 리뷰 */}
         {activeTab === 'review' && (
           <ReviewList reviews={reviews} averageRating={averageRating} />
         )}
 
+        {/* 탭 3: 내 예약 */}
         {activeTab === 'nearby' &&
-          reservations.map((res, i) => (
+          reservations.map((res) => (
             <ReservationCard
-              key={i}
-              hostAvatar={res.hostAvatar}
-              title={res.title}
-              dates={res.dates}
-              tags={res.tags}
+              key={res.reservationId}
+              hostAvatar={res.imageUrl || "/default-avatar.png"}
+              title={res.accommodationName}
+              dates={`${res.checkIn} ~ ${res.checkOut}`}
+              tags={[
+                `게스트 ${res.guests}명`,
+                `1박당 ${res.price.toLocaleString()}원`,
+                `총 결제 ${res.totalPayment.toLocaleString()}원`,
+                `위치: ${res.location}`
+              ]}
             />
           ))}
+
       </Section>
     </Container>
   );

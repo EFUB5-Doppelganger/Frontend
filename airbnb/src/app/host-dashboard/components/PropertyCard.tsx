@@ -15,28 +15,26 @@ import {
   PriceUnit
 } from '../HostDashboardPage.styles';
 
-interface Photo {
-  url: string;
-  displayOrder: number;
-}
-
 interface PropertyCardProps {
   name: string;
   dailyPrice: number;
   rating: number;
-  photos: Photo[];
+  image: string; 
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({
   name,
   dailyPrice,
   rating,
-  photos
+  image
 }) => {
   return (
     <PropertyCardWrapper>
       <ImageContainer>
-        <PropertyImage src={photos?.[0]?.url || "/default-image.jpg"} alt="숙소 이미지" />
+        <PropertyImage
+          src={image || "/default-image.jpg"}
+          alt="숙소 이미지"
+        />
         <HeartIcon>♡</HeartIcon>
         <DotIndicators>
           <Dot active />
@@ -52,6 +50,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
 
       <PropertyDistance>53 kilometers away</PropertyDistance>
       <PropertyDate>May 6 - 11</PropertyDate>
+
       <PropertyPrice>
         Rp{dailyPrice.toLocaleString()} <PriceUnit>/night</PriceUnit>
       </PropertyPrice>

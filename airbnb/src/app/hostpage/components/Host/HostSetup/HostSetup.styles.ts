@@ -299,3 +299,18 @@ export const PriceAmountInput = styled.input`
     box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.2);
   }
 `;
+
+export const ImagePreviewWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+
+  img {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+`;

@@ -1,4 +1,3 @@
-
 export interface Accommodation {
   id: number;
   name: string;
@@ -8,13 +7,11 @@ export interface Accommodation {
   maxGuests: number;
   address: string;
   amenities: string[];
-  photos: { url: string; displayOrder: number }[];
+  image: string; 
 }
 
-export interface GetMyAccommodationsResponse {
-  totalAccommodations: number;
-  reviews: Accommodation[];
-}
+
+export type GetMyAccommodationsResponse = Accommodation[];
 
 export interface Review {
   reviewId: number;

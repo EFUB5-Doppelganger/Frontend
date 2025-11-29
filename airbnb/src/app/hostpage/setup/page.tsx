@@ -2,17 +2,17 @@
 
 import { useState } from 'react';
 import * as S from '../../hostpage/components/Host/HostSetup/HostSetup.styles';
-import PropertyTypeSection from 'src/app/hostpage/components/Host/HostSetup/PropertyTypeSection';
-import LocationSection from 'src/app/hostpage/components/Host/HostSetup/LocationSection';
-import AmenitySection from 'src/app/hostpage/components/Host/HostSetup/AmenitySection';
-import UploadSection from 'src/app/hostpage/components/Host/HostSetup/UploadSection';
-import PriceSection from 'src/app/hostpage/components/Host/HostSetup/PriceSection';
+import PropertyTypeSection from '../../hostpage/components/Host/HostSetup/PropertyTypeSection';
+import LocationSection from '../../hostpage/components/Host/HostSetup/LocationSection';
+import AmenitySection from '../../hostpage/components/Host/HostSetup/AmenitySection';
+import UploadSection from '../../hostpage/components/Host/HostSetup/UploadSection';
+import PriceSection from '../../hostpage/components/Host/HostSetup/PriceSection';
 import { createAccommodation } from '@/app/hostpage/api/accommodation.api';
 
 type AccommodationForm = {
   propertyType: string;
   amenities: string[];
-  images: string[];
+  images: File[]; 
   name: string;
   description: string;
   location: string;
@@ -24,7 +24,7 @@ const HostSetupPage = () => {
   const [form, setForm] = useState<AccommodationForm>({
     propertyType: '집 전체',
     amenities: [],
-    images: [],
+    images: [],    
     name: '',
     description: '',
     location: '',
@@ -45,6 +45,10 @@ const HostSetupPage = () => {
     const token = localStorage.getItem('accessToken');
     if (!token) return alert('로그인이 필요합니다.');
 
+    if (form.images.length === 0) {
+      return alert("사진을 최소 1장 이상 업로드해주세요.");
+    }
+
     const payload = {
       name: form.name,
       description: form.description,
@@ -56,11 +60,9 @@ const HostSetupPage = () => {
       bed: 2,
       bathroom: 1,
       images: form.images,
-      amenities: form.amenities,
-      propertyType: form.propertyType,
     };
-
-    const result = await createAccommodation(token, payload);
+    
+    const result = await createAccommodation(payload);
     if (result) {
       alert('숙소 등록 완료!');
       console.log(result);
@@ -96,10 +98,10 @@ const HostSetupPage = () => {
       <UploadSection
         name={form.name}
         description={form.description}
-        images={form.images}
+        images={form.images}                 // File[]
         setName={(value) => setForm((prev) => ({ ...prev, name: value }))}
         setDescription={(value) => setForm((prev) => ({ ...prev, description: value }))}
-        setImages={(urls) => setForm((prev) => ({ ...prev, images: urls }))}
+        setImages={(files) => setForm((prev) => ({ ...prev, images: files }))} // File[]
       />
 
       <PriceSection
@@ -108,7 +110,6 @@ const HostSetupPage = () => {
           setForm((prev) => ({ ...prev, price: value }))
         }
       />
-
 
       <S.SubmitButton onClick={handleSubmit}>등록 완료하기</S.SubmitButton>
     </S.Container>
