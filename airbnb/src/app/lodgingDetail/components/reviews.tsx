@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
@@ -10,11 +10,11 @@ import { reviewSample } from '../reviewContent';
 const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
 
 export default function Reviews () {
-  const searchParams = useSearchParams();
+  const params = useParams<{ id: string }>();
 
   const [reviews, setReviews] = useState<ReviewItem[] | null>(null);
   const [totalReviews, setTotalReviews] = useState(0);
-  const accommodationId = searchParams.get('accommodationId') || '';
+  const accommodationId = params.id;
 
   const fetchReviews = async () => {
     try {
