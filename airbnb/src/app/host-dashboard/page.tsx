@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import {
   Container,
   Section,
-  SectionTitle
+  SectionTitle,
+  PropertyCardsContainer  
 } from './HostDashboardPage.styles';
 import TabBar from './components/TabBar';
 import PropertyCard from './components/PropertyCard';
@@ -60,16 +61,19 @@ const HostDashboardPage = () => {
         />
 
         {/* 탭 1: 내 숙소 */}
-        {activeTab === 'hostel' &&
-          accommodations.map((acc) => (
-            <PropertyCard
-              key={acc.id}
-              name={acc.name}
-              dailyPrice={acc.price}
-              rating={acc.rating}
-              image={acc.image}
-             />
-          ))}
+        {activeTab === 'hostel' && (
+          <PropertyCardsContainer>
+            {accommodations.map((acc) => (
+              <PropertyCard
+                key={acc.id}
+                name={acc.name}
+                dailyPrice={acc.price}
+                rating={acc.rating}
+                image={acc.image}
+              />
+            ))}
+          </PropertyCardsContainer>
+        )}
 
         {/* 탭 2: 리뷰 */}
         {activeTab === 'review' && (
