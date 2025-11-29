@@ -5,7 +5,11 @@ import { Poppins } from 'next/font/google';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600'] });
 
-export default function Convenience () {
+type Props = {
+  amenities: string[];
+}
+
+export default function Convenience ({ amenities }: Props) {
   return (
     <Wrapper>
       <Header className={poppins.className}>숙소 편의시설</Header>

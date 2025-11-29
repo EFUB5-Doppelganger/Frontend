@@ -4,13 +4,19 @@ import Image from 'next/image';
 import HostInfo from './hostInfo';
 import Price from './price';
 
-export default function HostPrice () {
+type Props = {
+  maxGuests: number;
+  dailyPrice: number;
+  rating: number;
+}
+
+export default function HostPrice ({ maxGuests, dailyPrice, rating }: Props) {
   return (
     <Wrapper>
       <LeftContainer>
         <HostInfo 
           hostName="김호스트"
-          limit="최대 4명까지 숙박 가능"
+          limit={`최대 ${maxGuests}명까지 숙박 가능`}
           hostProfile={<img src="/profile/profile1.svg" alt="호스트 프로필" style={{width: '60px', borderRadius: '50%'}} />}
         />
         <Line />
@@ -26,7 +32,7 @@ export default function HostPrice () {
           />
         </ReservationTimeNotice>
       </LeftContainer>
-      <Price />
+      <Price dailyPrice={dailyPrice} rating={rating} maxGuests={maxGuests}/>
     </Wrapper>
   );
 }

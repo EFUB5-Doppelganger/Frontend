@@ -1,22 +1,36 @@
 import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Poppins } from 'next/font/google';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600'] });
 
 type Props = {
+  id: string;
   image: string;
   name: string;
-  score: number;
+  rating: number;
+  location: string;
+  price: number;
 }
 
 export default function HotelCard (props: Props) {
+  const router = useRouter();
+
+  const handleCardClick = () => {
+    router.push(`/accommodations/${props.id}`);
+  };
+
+  const formatPrice = (price: number) => {
+    return `Rp${price.toLocaleString()}`;
+  };
+
   return (
-    <Wrapper>
+    <Wrapper onClick={handleCardClick}>
       <Image 
         src={props.image}
-        alt="호텔 카드 이미지"
+        alt={props.name}
         width={316}
         height={310}
       />
@@ -31,15 +45,15 @@ export default function HotelCard (props: Props) {
               width={15}
               height={15}
             />
-            <Score className={poppins.className}>{props.score}</Score>
+            <Score className={poppins.className}>{props.rating.toFixed(1)}</Score>
           </ScoreContainer>
         </NameScore>
 
-        <Description className={poppins.className}>53 kilometers away</Description>
+        <Description className={poppins.className}>{props.location}</Description>
         <Description className={poppins.className}>May 6-11</Description>
 
         <History className={poppins.className}>
-          <StrongHistory className={poppins.className}>Rp2,932,910</StrongHistory> night
+          <StrongHistory className={poppins.className}>{formatPrice(props.price)}</StrongHistory> night
         </History>
       </ContentContainer>
     </Wrapper>

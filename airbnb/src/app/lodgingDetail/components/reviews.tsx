@@ -1,13 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
-import { reviews, Props } from '../reviewContent';
 import Review from '@/app/common/review';
+import { getReview, ReviewItem } from "@/api/reviews";
+import { reviewSample } from '../reviewContent';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
 
 export default function Reviews () {
+  const searchParams = useSearchParams();
+
+  const [reviews, setReviews] = useState<ReviewItem[] | null>(null);
+  const [totalReviews, setTotalReviews] = useState(0);
+  const accommodationId = searchParams.get('accommodationId') || '';
+
+  const fetchReviews = async () => {
+    try {
+      const res = await getReview(Number(accommodationId));
+      setReviews(res.reviews);
+      setTotalReviews(res.totalReviews);
+    } catch (err) {
+      console.error("리뷰 불러오기 실패: ", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+
   return (
     <Container>
       <Header>
@@ -22,18 +45,22 @@ export default function Reviews () {
         <Text className={poppins.className}>1,800 리뷰</Text>
       </Header>
 
-      <ReviewContainer>
-        {reviews.map(({ profileImage, userName, writeDate, review }, index) => (
-          <Review
-            key={index}
-            profileImage={profileImage}
-            userName={userName}
-            writeDate={writeDate}
-            review={review}
-          />
-        ))}
+      {reviews ? (
+        <ReviewContainer>
+          {reviews.slice(0, 7).map((review, index) => (
+            <Review
+              key={review.reviewId}
+              profileImage={reviewSample[index % reviewSample.length]?.profileImage || '/default-avatar.png'}
+              userName={review.reviewerName}
+              writeDate={review.createdAt}
+              review={review.content}
+            />
+          ))}
       </ReviewContainer>
-      <MoreBtn className={poppins.className}>후기 1783개 모두 보기</MoreBtn>
+      ) : (
+        <div>로딩 중...</div>
+      )}
+      <MoreBtn className={poppins.className}>후기 {totalReviews}개 모두 보기</MoreBtn>
     </Container>
   );
 }

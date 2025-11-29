@@ -32,23 +32,19 @@ export interface GetReviewResponse {
 export async function postReview(
   data: PostReviewPayload,
   accommodationId: string,
-  reservationId: string,
-  accessToken: string
+  reservationId: string
 ): Promise<PostReviewResponse> {
   return apiClient<PostReviewResponse>(`/accommodations/${accommodationId}/reservations/${reservationId}/reviews`, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
     body: JSON.stringify(data),
   });
 }
 
 // 리뷰 조회
 export async function getReview(
-  accommodationId: number,
+  accommodationId: number
 ): Promise<GetReviewResponse> {
   return apiClient<GetReviewResponse>(`/accommodations/${accommodationId}/reviews`, {
-    method: "GET",
+    method: "GET"
   });
 }

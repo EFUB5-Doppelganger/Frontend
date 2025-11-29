@@ -7,7 +7,7 @@ export type Props = {
   review: string;
 };
 
-export const reviews: Props[] = [
+export const reviewSample: Props[] = [
   {
     profileImage: "/profile/profile1.svg",
     userName: "호운",

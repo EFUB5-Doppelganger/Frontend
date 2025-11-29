@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
+import { AccommodationPhoto } from '@/api/acoommodations';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600'] });
 
@@ -13,19 +14,26 @@ const photos = [
   "/hotel/hotel5.svg",
 ];
 
-export default function HotelIntroduction () {
+type Props = {
+  name: string;
+  rating: number;
+  address: string;
+  photos: AccommodationPhoto[];
+}
+
+export default function HotelIntroduction ({ name, rating, address, photos }: Props) {
   return (
     <Wrapper>
       <Header>
-        <Title className={poppins.className}>파라다이스 호텔 부산</Title>
+        <Title className={poppins.className}>{name}</Title>
         <HeaderDescription>
           <DetailedInfo>
             <Image src="/star.svg" alt="별점" width={15} height={15} />
-            <Text className={poppins.className}>4.83</Text>
+            <Text className={poppins.className}>{rating}</Text>
             <Text className={poppins.className}>•</Text>
             <TextStrong className={poppins.className}>1,800 리뷰</TextStrong>
             <Text className={poppins.className}>•</Text>
-            <TextStrong className={poppins.className}>해운대구 해운대해변로 296 (중동), 해운대구, 부산, 대한민국, 48099</TextStrong>
+            <TextStrong className={poppins.className}>{address}</TextStrong>
           </DetailedInfo>
           <Options>
             <Option>
@@ -42,13 +50,13 @@ export default function HotelIntroduction () {
 
       <Grid>
         <BigPhoto>
-          <Image src={photos[0]} alt="" fill style={{objectFit: 'cover', borderRadius: '0.7rem 0 0 0.7rem'}} />
+          <Image src={photos[0].url} alt="" fill style={{objectFit: 'cover', borderRadius: '0.7rem 0 0 0.7rem'}} />
         </BigPhoto>
-        <SmallPhoto><Image src={photos[1]} alt="" fill style={{objectFit: 'cover'}} /></SmallPhoto>
-        <SmallPhoto><Image src={photos[2]} alt="" fill style={{objectFit: 'cover', borderRadius: '0 0.7rem 0 0'}} /></SmallPhoto>
-        <SmallPhoto><Image src={photos[3]} alt="" fill style={{objectFit: 'cover'}} /></SmallPhoto>
+        <SmallPhoto><Image src={photos[1].url} alt="" fill style={{objectFit: 'cover'}} /></SmallPhoto>
+        <SmallPhoto><Image src={photos[0].url} alt="" fill style={{objectFit: 'cover', borderRadius: '0 0.7rem 0 0'}} /></SmallPhoto>
+        <SmallPhoto><Image src={photos[1].url} alt="" fill style={{objectFit: 'cover'}} /></SmallPhoto>
         <SmallPhoto>
-          <Image src={photos[4]} alt="" fill style={{objectFit: 'cover', borderRadius: '0 0 0.7rem 0'}} />
+          <Image src={photos[0].url} alt="" fill style={{objectFit: 'cover', borderRadius: '0 0 0.7rem 0'}} />
         </SmallPhoto>
       </Grid>
     </Wrapper>
