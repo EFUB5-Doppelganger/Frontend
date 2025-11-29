@@ -2,27 +2,28 @@
 
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Convenience from './components/convenience';
-import HostDetail from './components/hostDetail';
-import HostPrice from './components/hostPrice';
-import Location from './components/location';
-import NextTrip from './components/nextTrip';
-import Notice from './components/notice';
-import Reviews from './components/reviews';
+import Convenience from '../components/convenience';
+import HostDetail from '../components/hostDetail';
+import HostPrice from '../components/hostPrice';
+import Location from '../components/location';
+import NextTrip from '../components/nextTrip';
+import Notice from '../components/notice';
+import Reviews from '../components/reviews';
 import HotelIntroduction from '@/app/lodgingDetail/components/hotelIntroduction';
 import { getAccommodationDetail, GetAccommodationDetail } from "@/api/acoommodations";
-import { useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
 export default function Page() {
-  const searchParams = useSearchParams();
+  const params = useParams<{ id: string }>();
 
   const [details, setDetails] = useState<GetAccommodationDetail | null>(null);
 
-  const accommodationId = searchParams.get('accommodationId') || '';
+  const accommodationId = params.id;
 
   const fetchAccommodationDetail = async () => {
     try {
       const res = await getAccommodationDetail(Number(accommodationId));
+      console.log("숙소 번호:", accommodationId);
       setDetails(res);
     } catch (err) {
       console.error("숙소 상세 페이지 불러오기 실패: ", err);
