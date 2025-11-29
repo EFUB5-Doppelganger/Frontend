@@ -47,8 +47,12 @@ export async function postReview(
 // 리뷰 조회
 export async function getReview(
   accommodationId: number,
+  accessToken: string
 ): Promise<GetReviewResponse> {
   return apiClient<GetReviewResponse>(`/accommodations/${accommodationId}/reviews`, {
     method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 }

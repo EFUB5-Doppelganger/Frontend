@@ -50,35 +50,57 @@ export interface GetAccommodationCheckResponse {
 }
 
 // 숙소 카드 조회 (최신 순)
-export async function getAccommodationCardRecent(): Promise<GetAccommodationCardResponse> {
+export async function getAccommodationCardRecent(accessToken: string): Promise<GetAccommodationCardResponse> {
   return apiClient<GetAccommodationCardResponse>(
-    '/accommodations/card?sortBy=createdAt', { method: "GET" }
+    '/accommodations/card?sortBy=createdAt', {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }
   );
 }
 
 // 숙소 카드 조회 (평점 순) 
-export async function getAccommodationCardRating(): Promise<GetAccommodationCardResponse> {
+export async function getAccommodationCardRating(accessToken: string): Promise<GetAccommodationCardResponse> {
   return apiClient<GetAccommodationCardResponse>(
-    '/accommodations/card?sortBy=rating', { method: "GET" }
+    '/accommodations/card?sortBy=rating', { 
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+     }
   );
 }
 
 // 숙소 상세 조회
-export async function getAccommodationDetail(accommodationId : number): Promise<GetAccommodationDetail> {
+export async function getAccommodationDetail(
+  accommodationId : number,
+  accessToken:string
+): Promise<GetAccommodationDetail> {
   return apiClient<GetAccommodationDetail>(
-    `/accommodations/${accommodationId}`, { method: "GET" }
+    `/accommodations/${accommodationId}`, { 
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+   }
   );
 }
 
 // 숙소 예약 가능 날짜 조회
 export async function getAccommodationCheck(
   data: GetAccommodationCheckPayload,
-  accommodationId: number
+  accommodationId: number,
+  accessToken: string
 ): Promise<GetAccommodationCheckResponse> {
   return apiClient<GetAccommodationCheckResponse>(
     `/accommodations/${accommodationId}/check`, 
     { 
       method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       body: JSON.stringify(data),
     }
   );

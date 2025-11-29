@@ -11,7 +11,7 @@ const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600'] });
 const inter = Inter({ subsets: ['latin'], weight: ['300', '700']});
 
 export default function Reservation () {
-  const [reservations, setReservations] = useState<MyReservationItem[]>([]);
+  const [reservations, setReservations] = useState<MyReservationItem>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,7 +35,8 @@ export default function Reservation () {
       }
 
       const response = await getMyReservations(accessToken);
-      setReservations(response.reservation);
+      setReservations(response);
+      console.log("reservations: ", response);
       setError(null);
     } catch (err) {
       console.error('예약 조회 실패: ', err);

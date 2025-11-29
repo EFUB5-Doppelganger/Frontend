@@ -46,9 +46,15 @@ export interface GetMyReservationsResponse {
 }
 
 // 예약 요청 
-export async function postReservation(data: PostReservationPayload): Promise<PostReservationResponse> {
+export async function postReservation(
+  data: PostReservationPayload,
+  accessToken: string
+): Promise<PostReservationResponse> {
   return apiClient<PostReservationResponse>("/reservations", {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
     body: JSON.stringify(data),
   });
 }
@@ -56,7 +62,8 @@ export async function postReservation(data: PostReservationPayload): Promise<Pos
 // 예약 가능 날짜 선택
 export async function getPossibleDate(
   accommodationId: number,
-  params: GetPossibleDatePayload
+  params: GetPossibleDatePayload,
+  accessToken: string
 ): Promise<GetPossibleDateResponse> {
   const queryString = new URLSearchParams({
     checkIn: params.checkIn,
@@ -68,6 +75,9 @@ export async function getPossibleDate(
     `/accommodations/${accommodationId}/check?${queryString}`,
     {
       method: "GET",
+      headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
     }
   );
 }
