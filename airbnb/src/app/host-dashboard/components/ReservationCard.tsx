@@ -10,23 +10,29 @@ import {
   SendMessageButton
 } from '../HostDashboardPage.styles';
 
-import { Reservation } from '../types/host.d';
-
 interface ReservationCardProps {
-  reservation: Reservation;
+  hostAvatar: string;
+  title: string;
+  dates: string;
+  tags: string[];
 }
 
-const ReservationCard: React.FC<ReservationCardProps> = ({ reservation }) => {
+const ReservationCard: React.FC<ReservationCardProps> = ({
+  hostAvatar,
+  title,
+  dates,
+  tags
+}) => {
   return (
     <ReservationCardWrapper>
       <ReservationBadge>
-        <HostAvatar>{reservation.hostAvatar}</HostAvatar>
+        <HostAvatar>{hostAvatar}</HostAvatar>
         <BadgeText>2일 후 예정된 예약</BadgeText>
       </ReservationBadge>
 
-      <ReservationTitle>{reservation.title}</ReservationTitle>
-      <ReservationDates>{reservation.dates}</ReservationDates>
-      <ReservationTags>{reservation.tags.join(' / ')}</ReservationTags>
+      <ReservationTitle>{title}</ReservationTitle>
+      <ReservationDates>{dates}</ReservationDates>
+      <ReservationTags>{tags.join(' / ')}</ReservationTags>
 
       <SendMessageButton>메시지 보내기</SendMessageButton>
     </ReservationCardWrapper>

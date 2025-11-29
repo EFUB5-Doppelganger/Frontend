@@ -15,11 +15,26 @@ import {
   PriceUnit
 } from '../HostDashboardPage.styles';
 
-const PropertyCard: React.FC = () => {
+interface PropertyCardProps {
+  name: string;
+  dailyPrice: number;
+  rating: number;
+  image: string; 
+}
+
+const PropertyCard: React.FC<PropertyCardProps> = ({
+  name,
+  dailyPrice,
+  rating,
+  image
+}) => {
   return (
     <PropertyCardWrapper>
       <ImageContainer>
-        <PropertyImage src="/property-image.jpg" alt="숙소 이미지" />
+        <PropertyImage
+          src={image || "/default-image.jpg"}
+          alt="숙소 이미지"
+        />
         <HeartIcon>♡</HeartIcon>
         <DotIndicators>
           <Dot active />
@@ -29,14 +44,15 @@ const PropertyCard: React.FC = () => {
       </ImageContainer>
 
       <PropertyInfo>
-        <PropertyLocation>Lovina Seririt, Indonesia</PropertyLocation>
-        <Rating>★ 4.89</Rating>
+        <PropertyLocation>{name}</PropertyLocation>
+        <Rating>★ {rating.toFixed(2)}</Rating>
       </PropertyInfo>
 
       <PropertyDistance>53 kilometers away</PropertyDistance>
       <PropertyDate>May 6 - 11</PropertyDate>
+
       <PropertyPrice>
-        Rp2,932,910 <PriceUnit>/night</PriceUnit>
+        Rp{dailyPrice.toLocaleString()} <PriceUnit>/night</PriceUnit>
       </PropertyPrice>
     </PropertyCardWrapper>
   );

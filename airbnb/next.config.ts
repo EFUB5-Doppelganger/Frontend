@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
         pathname: '/**', // 또는 '/accommodations/**' 처럼 더 좁게
       },
     ],
+  compiler: {
+    styledComponents: true, 
   },
 };
 
