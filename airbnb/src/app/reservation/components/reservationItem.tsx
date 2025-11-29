@@ -36,7 +36,7 @@ export default function ReservationItem (props: Props) {
 
   // 후기 작성 버튼 클릭
   const handleReviewClick = () => {
-    router.push(`/reviews/write?accommodationId=${props.reservationId}`);
+    router.push(`/writeReview?accommodationId=${props.accommodationId}`);
   };
 
   // 날짜 포맷팅

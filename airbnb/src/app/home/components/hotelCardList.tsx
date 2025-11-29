@@ -6,6 +6,7 @@ import {
   getAccommodationCardRating,
   AccommodationCard
 } from "@/api/acoommodations";
+import { access } from 'fs';
 
 type Props = {
   sortBy: 'createdAt' | 'rating';
@@ -15,6 +16,15 @@ export default function HotelCardList ({ sortBy }: Props) {
   const [cards, setCards] = useState<AccommodationCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const getAccessToken = () => {
+    if (typeof window != 'undefined') {
+      return localStorage.getItem('accessToken') || '';
+    }
+    return '';
+  };
+
+  const accessToken = getAccessToken();
 
   useEffect(() => {
     const fetchAccommodations = async () => {

@@ -40,10 +40,7 @@ export interface MyReservationItem {
   totalPayment: number;
 }
 
-export interface GetMyReservationsResponse {
-  totalReservation: number;
-  reservation: MyReservationItem[];
-}
+export type GetMyReservationsResponse = MyReservationItem[];
 
 // 예약 요청 
 export async function postReservation(

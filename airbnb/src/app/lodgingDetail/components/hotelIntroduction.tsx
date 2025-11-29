@@ -22,6 +22,7 @@ type Props = {
 }
 
 export default function HotelIntroduction ({ name, rating, address, photos }: Props) {
+  console.log("사진: ", photos);
   return (
     <Wrapper>
       <Header>
@@ -52,9 +53,9 @@ export default function HotelIntroduction ({ name, rating, address, photos }: Pr
         <BigPhoto>
           <Image src={photos[0].url} alt="" fill style={{objectFit: 'cover', borderRadius: '0.7rem 0 0 0.7rem'}} />
         </BigPhoto>
-        <SmallPhoto><Image src={photos[1].url} alt="" fill style={{objectFit: 'cover'}} /></SmallPhoto>
+        <SmallPhoto><Image src={photos[0].url} alt="" fill style={{objectFit: 'cover'}} /></SmallPhoto>
         <SmallPhoto><Image src={photos[0].url} alt="" fill style={{objectFit: 'cover', borderRadius: '0 0.7rem 0 0'}} /></SmallPhoto>
-        <SmallPhoto><Image src={photos[1].url} alt="" fill style={{objectFit: 'cover'}} /></SmallPhoto>
+        <SmallPhoto><Image src={photos[0].url} alt="" fill style={{objectFit: 'cover'}} /></SmallPhoto>
         <SmallPhoto>
           <Image src={photos[0].url} alt="" fill style={{objectFit: 'cover', borderRadius: '0 0 0.7rem 0'}} />
         </SmallPhoto>
@@ -80,7 +81,7 @@ const HeaderDescription = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 33rem;
+  gap: 51rem;
 `;
 
 const Title = styled.h1`
