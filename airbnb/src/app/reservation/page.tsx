@@ -11,7 +11,7 @@ const poppins = Poppins({ subsets: ['latin'], weight: ['400', '500', '600'] });
 const inter = Inter({ subsets: ['latin'], weight: ['300', '700']});
 
 export default function Reservation () {
-  const [reservations, setReservations] = useState<MyReservationItem>([]);
+  const [reservations, setReservations] = useState<MyReservationItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,9 +43,7 @@ export default function Reservation () {
     }
 
     try {
-      const accessToken = getAccessToken();
-
-      await cancelReservation(reservationId, accessToken);
+      await cancelReservation(reservationId);
       alert('예약이 취소되었습니다.');
       fetchReservations();
     } catch (err) {

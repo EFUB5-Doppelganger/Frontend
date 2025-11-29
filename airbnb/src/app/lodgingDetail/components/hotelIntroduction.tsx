@@ -81,7 +81,7 @@ const HeaderDescription = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 33rem;
+  gap: 51rem;
 `;
 
 const Title = styled.h1`

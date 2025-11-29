@@ -109,10 +109,10 @@ const MoreBtn = styled.button`
   flex-shrink: 0;
   border-radius: 0.75rem;
   border: 1px solid #3E3E3E;
-  position: absolute;
-  right: 22rem;
   bottom: 3.5rem;
   background: #fff;
+  margin-top: 1rem;
+  align-self: flex-end;
 
   color: #3E3E3E;
   font-size: 0.875rem;
