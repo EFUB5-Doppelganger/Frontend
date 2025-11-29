@@ -273,3 +273,44 @@ export const SubmitButton = styled.button`
     transform: scale(0.99);
   }
 `;
+
+
+export const PriceAmountInput = styled.input`
+  width: 100%;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  margin-top: 10px;
+  box-sizing: border-box;
+
+  /* 스핀 버튼 제거 (Chrome, Safari) */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  
+  &:focus {
+    outline: none;
+    border-color: #ff385c; /* Airbnb 메인 컬러 느낌 */
+    box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.2);
+  }
+`;
+
+export const ImagePreviewWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+
+  img {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+`;

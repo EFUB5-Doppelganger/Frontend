@@ -43,7 +43,8 @@ export const Tab = styled.button<{ active: boolean }>`
 
 // PropertyCard
 export const PropertyCardWrapper = styled.div`
-  max-width: 320px;
+   min-width: 350px;
+   max-width: 350px;
 `;
 
 export const ImageContainer = styled.div`
@@ -284,5 +285,31 @@ export const SendMessageButton = styled.button`
 
   &:hover {
     background-color: #F7F7F7;
+  }
+`;
+export const PropertyCardsContainer = styled.div`
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding: 12px 0;
+  margin-bottom: 40px;
+
+  /* 스크롤바 스타일 */
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+
+    &:hover {
+      background: #555;
+    }
   }
 `;
