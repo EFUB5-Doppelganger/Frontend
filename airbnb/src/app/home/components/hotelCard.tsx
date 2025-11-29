@@ -19,7 +19,7 @@ export default function HotelCard (props: Props) {
   const router = useRouter();
 
   const handleCardClick = () => {
-    router.push(`/accommodations/${props.id}`);
+    router.push(`/lodgingDetail/${props.id}`);
   };
 
   const formatPrice = (price: number) => {
@@ -28,11 +28,9 @@ export default function HotelCard (props: Props) {
 
   return (
     <Wrapper onClick={handleCardClick}>
-      <Image 
+      <HotelImage 
         src={props.image}
         alt={props.name}
-        width={316}
-        height={310}
       />
 
       <ContentContainer>
@@ -72,6 +70,11 @@ const Wrapper = styled.div`
   align-items: center;
   padding-bottom: 0.81rem;
   gap: 0.94rem;
+`;
+
+const HotelImage = styled.img`
+  width: 316;
+  height: 310;
 `;
 
 const ContentContainer = styled.div`
