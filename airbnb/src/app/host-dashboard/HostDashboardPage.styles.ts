@@ -43,8 +43,8 @@ export const Tab = styled.button<{ active: boolean }>`
 
 // PropertyCard
 export const PropertyCardWrapper = styled.div`
-   min-width: 380px;
-   max-width: 380px;
+   min-width: 350px;
+   max-width: 350px;
 `;
 
 export const ImageContainer = styled.div`
