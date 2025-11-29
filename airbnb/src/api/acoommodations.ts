@@ -50,40 +50,30 @@ export interface GetAccommodationCheckResponse {
 }
 
 // 숙소 카드 조회 (최신 순)
-export async function getAccommodationCardRecent(accessToken: string): Promise<GetAccommodationCardResponse> {
+export async function getAccommodationCardRecent(): Promise<GetAccommodationCardResponse> {
   return apiClient<GetAccommodationCardResponse>(
-    '/accommodations/card?sortBy=createdAt', {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+    '/accommodations/card?sortBy=createdAt&page=0', {
+      method: "GET"
     }
   );
 }
 
 // 숙소 카드 조회 (평점 순) 
-export async function getAccommodationCardRating(accessToken: string): Promise<GetAccommodationCardResponse> {
+export async function getAccommodationCardRating(): Promise<GetAccommodationCardResponse> {
   return apiClient<GetAccommodationCardResponse>(
-    '/accommodations/card?sortBy=rating', { 
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+    '/accommodations/card?sortBy=rating&page=0', { 
+      method: "GET"
      }
   );
 }
 
 // 숙소 상세 조회
 export async function getAccommodationDetail(
-  accommodationId : number,
-  accessToken:string
+  accommodationId : number
 ): Promise<GetAccommodationDetail> {
   return apiClient<GetAccommodationDetail>(
     `/accommodations/${accommodationId}`, { 
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+      method: "GET"
    }
   );
 }
@@ -91,16 +81,12 @@ export async function getAccommodationDetail(
 // 숙소 예약 가능 날짜 조회
 export async function getAccommodationCheck(
   data: GetAccommodationCheckPayload,
-  accommodationId: number,
-  accessToken: string
+  accommodationId: number
 ): Promise<GetAccommodationCheckResponse> {
   return apiClient<GetAccommodationCheckResponse>(
     `/accommodations/${accommodationId}/check`, 
     { 
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
       body: JSON.stringify(data),
     }
   );

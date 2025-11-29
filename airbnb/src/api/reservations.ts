@@ -47,14 +47,10 @@ export interface GetMyReservationsResponse {
 
 // 예약 요청 
 export async function postReservation(
-  data: PostReservationPayload,
-  accessToken: string
+  data: PostReservationPayload
 ): Promise<PostReservationResponse> {
   return apiClient<PostReservationResponse>("/reservations", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
     body: JSON.stringify(data),
   });
 }
@@ -62,8 +58,7 @@ export async function postReservation(
 // 예약 가능 날짜 선택
 export async function getPossibleDate(
   accommodationId: number,
-  params: GetPossibleDatePayload,
-  accessToken: string
+  params: GetPossibleDatePayload
 ): Promise<GetPossibleDateResponse> {
   const queryString = new URLSearchParams({
     checkIn: params.checkIn,
@@ -74,34 +69,23 @@ export async function getPossibleDate(
   return apiClient<GetPossibleDateResponse>(
     `/accommodations/${accommodationId}/check?${queryString}`,
     {
-      method: "GET",
-      headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+      method: "GET"
     }
   );
 }
 
 // 내 예약 조회 
 export async function getMyReservations(
-  accessToken: string
 ): Promise<GetMyReservationsResponse> {
   return apiClient<GetMyReservationsResponse>("/reservations/me", {
     method: "GET",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
   });
 }
 
 export async function cancelReservation(
-  reservationId: number,
-  accessToken: string
+  reservationId: number
 ): Promise<void> {
   return apiClient<void>(`/reservations/${reservationId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+    method: "DELETE"
   });
 }

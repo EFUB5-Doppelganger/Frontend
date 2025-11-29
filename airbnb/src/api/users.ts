@@ -44,11 +44,8 @@ export async function login(data: LoginPayload): Promise<LoginResponse> {
 }
 
 // 소셜 로그인
-export async function socialLogin(accessToken: string): Promise<SocialLoginResponse> {
+export async function socialLogin(): Promise<SocialLoginResponse> {
   return apiClient<SocialLoginResponse>("/users/login/kakao", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+    method: "POST"
   });
 }
