@@ -81,8 +81,7 @@ export default function WriteReview () {
           score: rating,
         },
         accommodationId,
-        reservationId,
-        accessToken,
+        reservationId
       );
 
       alert('후기가 성공적으로 작성되었습니다!');

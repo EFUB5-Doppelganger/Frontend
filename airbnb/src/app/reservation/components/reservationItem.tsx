@@ -57,7 +57,7 @@ export default function ReservationItem (props: Props) {
 
   return (
     <Wrapper>
-      <ItemContainer>
+      <ItemContainer $width="2.5rem">
         <ListNumber className={inter.className}>{props.listNum}</ListNumber>
       </ItemContainer>
 
@@ -65,29 +65,25 @@ export default function ReservationItem (props: Props) {
         <Image 
           src="/hotel/hotel2.svg"
           alt="호텔 이미지"
-          width={400}
-          height={200}
+          width={300}
+          height={250}
         />
         <HotelName className={poppins.className}>{props.accommodationName}</HotelName>
       </HotelImage>
 
-      <ItemContainer>
-        <TextContainer className={inter.className}>
+      <ItemContainer className={inter.className} $width="17.5rem">
           {formatDate(props.checkIn)} - {formatDate(props.checkOut)}
-        </TextContainer>
       </ItemContainer>
 
-      <ItemContainer>
-        <TextContainer className={inter.className}>{props.guests}명</TextContainer>
+      <ItemContainer className={inter.className} $width="8.25rem">
+        {props.guests}명
       </ItemContainer>
 
-      <ItemContainer>
-        <TextContainer className={inter.className}>
+      <ItemContainer className={inter.className} $width="12.12rem">
           {formatPrice(props.totalPayment)}
-        </TextContainer>
       </ItemContainer>
       
-      <ItemContainer>
+      <ItemContainer $width="13rem">
         {isCheckoutPassed() ? (
           <CancelBtn 
             $cancel={false} 
@@ -112,10 +108,11 @@ export default function ReservationItem (props: Props) {
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 0;
   height: 19.56rem;
+  width: 78.99rem;
 `;
 
 const ListNumber = styled.div`
@@ -124,6 +121,10 @@ const ListNumber = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  width: 5rem;
+  min-width: 5rem;
+  text-align: center;
+  flex-shrink: 0;
 `;
 
 const HotelImage = styled.div`
@@ -134,6 +135,10 @@ const HotelImage = styled.div`
   border-top: 2px solid #d5d5d5;
   gap: 0.69rem;
   height: 19.56rem;
+  width: 26.94rem;
+  min-width: 26.94rem;
+  padding: 0;
+  flex-shrink: 0;
 `;
 
 const HotelName = styled.h3`
@@ -142,23 +147,19 @@ const HotelName = styled.h3`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  margin: 0;
 `;
 
-const TextContainer = styled.div`
-  color: #3E3E3E;
-  font-size: 1.25rem;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;
-`;
-
-const ItemContainer = styled.div`
+const ItemContainer = styled.div<{ $width?: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
   border-top: 2px solid #d5d5d5;
   height: 19.56rem;
-  padding: 0 2.125rem;
+  padding: 0;
+  width: ${({ $width }) => $width || 'auto'};
+  min-width: ${({ $width }) => $width || 'auto'};
+  flex-shrink: 0;
 `;
 
 const CancelBtn = styled.button<{ $cancel: boolean }>`

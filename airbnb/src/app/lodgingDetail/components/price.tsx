@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
 import { getAccommodationCheck, GetAccommodationCheckResponse } from '@/api/acoommodations';
-import { useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import { postReservation } from '@/api/reservations';
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
 
@@ -14,15 +16,15 @@ type Props = {
 };
 
 export default function Price ({ dailyPrice, rating, maxGuests }: Props) {
-  const searchParams = useSearchParams();
+  const router = useRouter();
+  const params = useParams();
+  const accommodationId = params.id;
 
   const [check, setCheck] = useState<GetAccommodationCheckResponse | null>(null);
   const [checkIn, setCheckIn] = useState('');
   const [checkOut, setCheckOut] = useState('');
   const [guests, setGuests] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-
-  const accommodationId = searchParams.get('accommodationId') || '';
 
   // 날짜 차이 계산
   const calculateNights = (): number => {
@@ -52,6 +54,37 @@ export default function Price ({ dailyPrice, rating, maxGuests }: Props) {
     }
   };
 
+  const fetchReservation = async () => {
+    if (!check) {
+      alert('먼저 예약 가능 여부를 확인해주세요.');
+      return;
+    }
+
+    if (check.available) {
+      try {
+        setIsLoading(true);
+        
+        await postReservation({
+          accommodationId: Number(accommodationId),
+          checkIn,
+          checkOut,
+          guests,
+          totalPayment: check.totalPrice
+        });
+
+        alert('예약이 완료되었습니다!');
+        router.push('/reservation');
+      } catch (err) {
+        console.error("예약 실패: ", err);
+        alert('예약 처리 중 오류가 발생했습니다.');
+      } finally {
+        setIsLoading(false);
+      }
+    } else {
+      alert("예약이 불가능합니다.");
+    }
+  };
+
   // 체크인/체크아웃 날짜 변경 핸들러 
   const handleCheckIn = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckIn(e.target.value);
@@ -67,8 +100,9 @@ export default function Price ({ dailyPrice, rating, maxGuests }: Props) {
   };
 
   // 예약 버튼 핸들러 
-  const handleClickReserve = () => {
-    fetchCheck();
+  const handleClickReserve = async () => {
+    await fetchCheck();
+    fetchReservation();
   };
 
   const renderGuestOptions = () => {

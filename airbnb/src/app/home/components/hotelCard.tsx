@@ -73,8 +73,9 @@ const Wrapper = styled.div`
 `;
 
 const HotelImage = styled.img`
-  width: 316;
-  height: 310;
+  width: 19rem;
+  height: 20rem;
+  border-radius: 0.9375rem;
 `;
 
 const ContentContainer = styled.div`

@@ -1,26 +1,28 @@
 import { apiClient } from "./client";
 
 export interface SignUpPayload {
-  userId: string;
+  email: string;
   password: string;
-  provider: "general";
 }
 
 export interface SignUpResponse {
-  userId: string;
-  password: string;
-  provider: "general";
+  id: number;
+  email: string;
+  nickname: string;
+  loginType: string;
+  bio: null;
+  bornYear: null;
+  job: null;
 }
 
 export interface LoginPayload {
-  userId: string;
+  email: string;
   password: string;
 }
 
 export interface LoginResponse {
-  success: boolean;
-  message: string;
   accessToken?: string; // 로그인 성공 시 토큰 반환
+  tokenType: string;
 }
 
 export interface SocialLoginResponse {
@@ -45,7 +47,7 @@ export async function login(data: LoginPayload): Promise<LoginResponse> {
 
 // 소셜 로그인
 export async function socialLogin(): Promise<SocialLoginResponse> {
-  return apiClient<SocialLoginResponse>("/users/login/kakao", {
+  return apiClient<SocialLoginResponse>("/oauth2/authorization/kakao", {
     method: "POST"
   });
 }

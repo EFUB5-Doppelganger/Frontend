@@ -132,11 +132,15 @@ const ItemList = styled.div`
 const ListHeader = styled.div`
   display: flex;
   width: 78.99rem;
+  align-items: center;
+  border-bottom: 2px solid #d5d5d5;
+  padding: 1rem 0;
 `;
 
 const Title1 = styled.h2`
-  width: 24.94rem;
+  width: 28.94rem;
   text-align: center;
+  margin: 0;
 
   color: #000;
   font-family: Inter;
@@ -146,8 +150,9 @@ const Title1 = styled.h2`
   line-height: normal;
 `;
 const Title2 = styled.h2`
-  width: 19.37rem;
+  width: 23.62rem;
   text-align: center;
+  margin: 0;
 
   color: #000;
   font-family: Inter;
@@ -157,8 +162,9 @@ const Title2 = styled.h2`
   line-height: normal;
 `;
 const Title3 = styled.h2`
-  width: 5rem;
+  width: 9.25rem;
   text-align: center;
+  margin: 0;
 
   color: #000;
   font-family: Inter;
@@ -168,8 +174,9 @@ const Title3 = styled.h2`
   line-height: normal;
 `;
 const Title4 = styled.h2`
-  width: 11.37rem;
+  width: 15.62rem;
   text-align: center;
+  margin: 0;
 
   color: #000;
   font-family: Inter;
@@ -181,6 +188,7 @@ const Title4 = styled.h2`
 const Title5 = styled.h2`
   width: 13.81rem;
   text-align: center;
+  margin: 0;
 
   color: #000;
   font-family: Inter;
@@ -190,7 +198,7 @@ const Title5 = styled.h2`
   line-height: normal;
 `;
 
-const Title6 = styled.h2`
+const Title6 = styled.div`
   width: 5rem;
   text-align: center;
 `;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Inter } from 'next/font/google';
-import { signUp, login, socialLogin } from "@/api/users";
+import { signUp, login } from "@/api/users";
 import { useRouter } from 'next/navigation';
 
 interface LoginBtnProps {
@@ -11,6 +11,11 @@ interface LoginBtnProps {
 }
 
 const inter = Inter({ subsets: ['latin'], weight: '300' })
+
+// 소셜 로그인 - API 호출 없이 직접 리다이렉트
+export function socialLogin() {
+  window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/kakao`;
+}
 
 export default function loginBtn ({ loginMethod, userId, userPw }: LoginBtnProps) {
   const router = useRouter();
@@ -30,15 +35,14 @@ export default function loginBtn ({ loginMethod, userId, userPw }: LoginBtnProps
     // 일반 로그인/회원가입 처리
     try {
       const signUpRes  = await signUp({
-        userId: userId, 
-        password: userPw,
-        provider: "general",
+        email: userId, 
+        password: userPw
       });
       console.log("회원가입 성공: ", signUpRes);
 
       // 회원가입 후 자동 로그인
       const loginRes = await login({
-        userId,
+        email: userId,
         password: userPw,
       });
 
@@ -55,7 +59,7 @@ export default function loginBtn ({ loginMethod, userId, userPw }: LoginBtnProps
       // 회원가입 실패 시 로그인 시도 
       try {
         const loginRes = await login({
-          userId,
+          email: userId,
           password: userPw,
         });
         console.log("로그인 성공!");
@@ -76,26 +80,10 @@ export default function loginBtn ({ loginMethod, userId, userPw }: LoginBtnProps
   };
 
   // 소셜 로그인
-  const handleSocialLogin = async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      let response;
-
-      response = await socialLogin();
-
-      // 리다이렉트 URL로 이동
-      if (response["redirect-url"]) {
-        window.location.href = response["redirect-url"];
-      }
-    } catch (error: any) {
-      console.error("소셜 로그인 오류: ", error);
-      setError("카카오 로그인에 실패했습니다.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const handleSocialLogin = () => {
+    localStorage.setItem('redirectAfterLogin', '/');
+    socialLogin();
+  }
 
   // 버튼 클릭 핸들러
   const handleClick = () => {
