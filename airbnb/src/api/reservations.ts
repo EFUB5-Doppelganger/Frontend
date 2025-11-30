@@ -2,7 +2,6 @@ import { apiClient } from "./client";
 
 export interface PostReservationPayload {
   accommodationId: number;
-  memberId: number;
   checkIn: string;
   checkOut: string;
   guests: number;
