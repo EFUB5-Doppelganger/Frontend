@@ -86,7 +86,7 @@ export async function getAccommodationCheck(
   return apiClient<GetAccommodationCheckResponse>(
     `/accommodations/${accommodationId}/check`, 
     { 
-      method: "GET",
+      method: "POST",
       body: JSON.stringify(data),
     }
   );
