@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
@@ -73,7 +73,7 @@ export default function Price ({ dailyPrice, rating, maxGuests }: Props) {
         });
 
         alert('예약이 완료되었습니다!');
-        router.push('/reservations');
+        router.push('/reservation');
       } catch (err) {
         console.error("예약 실패: ", err);
         alert('예약 처리 중 오류가 발생했습니다.');
@@ -100,8 +100,8 @@ export default function Price ({ dailyPrice, rating, maxGuests }: Props) {
   };
 
   // 예약 버튼 핸들러 
-  const handleClickReserve = () => {
-    fetchCheck();
+  const handleClickReserve = async () => {
+    await fetchCheck();
     fetchReservation();
   };
 
