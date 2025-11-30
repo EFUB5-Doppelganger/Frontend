@@ -1,5 +1,23 @@
 import { apiClient } from "@/api/client";
 
+// 숙소 검색 response 
+export interface Accommodations {
+  id: number;
+  name: string;
+  rating: string;
+  location: string;
+  price: number;
+  reviewCnt: number;
+  maxGuest: number;
+  bedroom: number;
+  bed: number;
+  bathroom: number
+};
+
+export interface GetAccommodation {
+  accommodations: Accommodations[];
+}
+
 // 숙소 카드
 export interface AccommodationCard {
   id: string;
@@ -47,6 +65,15 @@ export interface GetAccommodationCheckResponse {
   detail: string;
   reason: string | null;
   available: boolean;
+}
+
+// 숙소 검색 
+export async function getAccommodationSearch(query: string): Promise<GetAccommodation> {
+  return apiClient<GetAccommodation>(
+    `/accommodations?query=${query}&page=0`, {
+      method: "GET"
+    }
+  );
 }
 
 // 숙소 카드 조회 (최신 순)
