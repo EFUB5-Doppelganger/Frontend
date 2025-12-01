@@ -1,22 +1,34 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
 import HotelCardList from './home/components/hotelCardList';
 import Navigation from './home/components/navigation';
+import { useRouter } from 'next/navigation';
 
 const poppins = Poppins({ subsets: ['latin'], weight: '500' });
 
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      console.log("accessToken이 없습니다")
+      router.push('/signInUp');
+    }
+  }, []);
+
   const [sortBy, setSortBy] = useState<'createdAt' | 'rating'>('createdAt');
 
 
   return (
     <Wrapper>
-      <Navigation sortBy={sortBy} onSortChange={setSortBy} />
+      <Navigation />
       <HotelCardList sortBy={sortBy} />
       <MapBtn>
         <Map className={poppins.className}>Show map</Map>
