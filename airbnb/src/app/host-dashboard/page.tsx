@@ -37,8 +37,8 @@ const HostDashboardPage = () => {
         }
   
         const reservationData = await getMyReservations();
-        setReservations(reservationData.reservation || []);
-  
+        setReservations(reservationData || []);
+
       } catch (error) {
         console.error('대시보드 데이터 불러오기 실패:', error);
       }
