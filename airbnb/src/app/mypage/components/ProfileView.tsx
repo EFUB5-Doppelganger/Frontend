@@ -26,7 +26,7 @@ export default function ProfileView({ setIsEditing }: Props) {
       const token = localStorage.getItem("accessToken");
       if (!token) return;
 
-      const data = await getUserProfile(token);
+      const data = await getUserProfile();
       if (data) setProfile(data);
     };
 

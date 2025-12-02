@@ -32,7 +32,7 @@ export default function ProfileEdit({ profile, setProfile, setIsEditing }: Props
         bio: profile.introduction, 
       };
 
-      const result = await updateUserProfile(token, payload);
+      const result = await updateUserProfile(payload);
       if (result) {
         alert("프로필이 성공적으로 수정되었습니다.");
         setIsEditing(false);
